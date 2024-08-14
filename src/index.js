@@ -1,17 +1,17 @@
 import express from 'express';
 import uploadRoutes from './routes/uploadRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 const app = express();
-
+app.use(express.json());
 // Routes
 app.use('/api/v1', uploadRoutes);
+app.use('/api', userRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);
 
-const PORT = process.env.PORT;
-app.listen(PORT, (err) => {
-  if (err) console.log(err);
-  else console.log(`Server is running smoothly on port ${PORT}`);
-});
+export default app;
+
+
