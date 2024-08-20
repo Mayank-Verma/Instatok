@@ -2,11 +2,23 @@ import * as userService from '../services/userService.js';
 
 export async function createUser(req, res) {
   try {
+  
     const user = await userService.createUser(req.body);
-    res.status(201).json({ status:"success", message: 'User created successfully' });
-  } catch (err) {
-    res.status(500).json({ status: "failed", error: err.message });
+  } 
+  catch (err) {
+    if(err.name==='SequelizeValidationError')
+    res.status(500).json({ status: "failed", error: err.message});
+    else
+    res.status(201).json({ status:"success", message: 'User created, kindly login with otp sent in mail, to verify the user!' });
   }
+}
+
+export async function verifyUser(req, res) {
+
+  const user= userService.verifyUser(req.body);
+  if(user) res.status(200).json({status:"Success",message:"User verified successfully!"})
+  else  res.status(500).json({status:"Failed",message:"Invalid credentials!"})
+  
 }
 
 export async function getUser(req, res) {

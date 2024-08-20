@@ -24,6 +24,11 @@ const User = sequelize.define('User', {
   isVerified:{
     type:DataTypes.BOOLEAN,
     defaultValue:false,
+    allowNull:true
+  },
+  otp:{
+    type:DataTypes.INTEGER,
+    defaultValue:1234,
     allowNull:false
   }
 }, {
