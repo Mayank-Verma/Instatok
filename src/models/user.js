@@ -10,6 +10,7 @@ const User = sequelize.define('User', {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique:true
   },
   email: {
     type: DataTypes.STRING,
@@ -20,6 +21,11 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isVerified:{
+    type:DataTypes.BOOLEAN,
+    defaultValue:false,
+    allowNull:false
+  }
 }, {
   tableName: 'users',
   timestamps: true,

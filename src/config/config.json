@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Mayank@123",
+    "database": "instatok",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Mayank@123",
+    "database": "instatok",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Mayank@123",
+    "database": "instatok",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
