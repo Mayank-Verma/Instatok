@@ -29,3 +29,11 @@ http://localhost:4949/api/v1/users/{id}
 
 For uploading posts: 
 http://localhost:4949/api/v1/post-upload
+
+
+For Fetching All Posts:
+http://localhost:4949/api/v1/fetchPosts
+
+
+For Fetching Post by Id:
+http://localhost:4949/api/v1/fetchPosts/{id}
