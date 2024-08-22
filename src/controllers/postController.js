@@ -1,22 +1,28 @@
 import supabase from "../config/supabase.js";
 import Post from "../models/post.js";
 import User from "../models/user.js";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 ,validate as uuidValidate} from "uuid";
 
 const CDNURL = `https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/`;
+
+
+// Function for uploading post
 export const uploadVideo = async (req, res) => {
   if (!req.file) {
     return res.status(400).send("No file uploaded");
   }
-  const user = await User.findOne({ where: { id: req.body.userId } });
-  console.log("user", user.dataValues);
-  
-  
-  // if(user===null){
-  //   return res.status(400).send({status:"failed",message:"User is not verified, not allowed to upload post"})
-  // }
 
-  
+  // To check if UUID is a vaid UUID 
+  console.log(uuidValidate(req.body.userId))
+  if(!uuidValidate(req.body.userId)){
+    return res.status(400).send({status:"failed",message:"Invalid User ID, kindly provide a valid UUID"})
+  }
+
+  // To check if UUID belongs to actual user present in DB
+  const user = await User.findOne({ where: { id: req.body.userId } });
+  if(user===null){
+    return res.status(400).send({status:"failed",message:"User is not verified, not allowed to upload post"})
+  }
 
 
   try {
@@ -43,10 +49,14 @@ export const uploadVideo = async (req, res) => {
   }
 };
 
+
+// Function for fetching All posts 
 export const fetchAllPosts = async (req, res) => {
   const result = await Post.findAll();
   res.status(200).json(result);
 };
+
+// Function for fetching Posts by ID
 export const fetchPostById = async (req, res) => {
   console.log(req.params.id);
 

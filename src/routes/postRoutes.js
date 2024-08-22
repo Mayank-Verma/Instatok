@@ -4,7 +4,7 @@ import {
   uploadVideo,
   fetchAllPosts,
   fetchPostById,
-} from "../controllers/uploadController.js";
+} from "../controllers/postController.js";
 
 const router = express.Router();
 
