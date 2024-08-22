@@ -1,39 +1,37 @@
 API's:
 
 1. For creating user:
-http://localhost:4949/api/v1/signup
+   http://localhost:4949/api/v1/signup
 
-body: 
-
-{
-    "email":"mayankverma@yopmail.com",
-    "password":"Mayank@123",
-    "username":"mayank"
-}
-
-For verifying user:
-http://localhost:4949/api/v1/login
-
-body: 
+body:
 
 {
-    "email":"mayankverma@yopmail.com",
-    "otp":"555407"   
+"email":"mayankverma@yopmail.com",
+"password":"Mayank@123",
+"username":"mayank"
 }
 
-For getting All users data:
-http://localhost:4949/api/v1/users
+2. For verifying user:
+   http://localhost:4949/api/v1/login
 
-For Getting a specific user by Id:
-http://localhost:4949/api/v1/users/{id}
+body:
 
-For uploading posts: 
-http://localhost:4949/api/v1/post-upload
+{
+"email":"mayankverma@yopmail.com",
+"otp":"555407"  
+}
 
+3. For getting All users data:
+   http://localhost:4949/api/v1/users
 
-For Fetching All Posts:
-http://localhost:4949/api/v1/fetchPosts
+4. For Getting a specific user by Id:
+   http://localhost:4949/api/v1/users/{id}
 
+5. For uploading posts:
+   http://localhost:4949/api/v1/post-upload
 
-For Fetching Post by Id:
-http://localhost:4949/api/v1/fetchPosts/{id}
+6. For Fetching All Posts:
+   http://localhost:4949/api/v1/fetchPosts
+
+7. For Fetching Post by Id:
+   http://localhost:4949/api/v1/fetchPosts/{id}
