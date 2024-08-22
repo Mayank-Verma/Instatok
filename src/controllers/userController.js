@@ -9,7 +9,7 @@ export async function createUser(req, res) {
     if(err.name==='SequelizeValidationError')
     res.status(500).json({ status: "failed", error: err.message});
     else
-    res.status(201).json({ status:"success", message: 'User created, kindly login with otp sent in mail, to verify the user!' });
+    res.status(201).json({ status:"success", message: 'OTP sent in mail, kindly login with otp to continue registration!' });
   }
 }
 
