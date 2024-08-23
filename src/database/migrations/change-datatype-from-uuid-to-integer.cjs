@@ -5,14 +5,14 @@ module.exports = {
 
     await queryInterface.changeColumn('verification', 'otp', {
       type: Sequelize.INTEGER,
-      allowNull: false, // Or whatever constraints you need
+      allowNull: false, 
     });
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.changeColumn('verification', 'otp', {
       type: Sequelize.UUID,
-      allowNull: false, // Or the original constraints
+      allowNull: false, 
     });
   }
 };

@@ -4,12 +4,11 @@ export async function createUser(req, res) {
   try {
   
     const user = await userService.createUser(req.body);
+    res.status(201).json({ status:"success", message: 'OTP sent in mail, kindly login with otp to continue registration!' });
   } 
   catch (err) {
     if(err.name==='SequelizeValidationError')
     res.status(500).json({ status: "failed", error: err.message});
-    else
-    res.status(201).json({ status:"success", message: 'OTP sent in mail, kindly login with otp to continue registration!' });
   }
 }
 

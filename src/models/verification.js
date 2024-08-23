@@ -16,7 +16,6 @@ const Verification = sequelize.define(
     otp: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: false,
     },
 
     expiresAt: {
@@ -26,7 +25,7 @@ const Verification = sequelize.define(
     isUsed: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue:null
+      defaultValue:false
     },
   },
   {

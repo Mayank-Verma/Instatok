@@ -7,21 +7,68 @@ import otpService from "./otpService.js";
 
 const saltRounds = 10;
 const jwtSecret = process.env.JWT_SECRET || "your_jwt_secret";
-const otpExpirtyDuration=10; //10 Minutes
+const otpExpirtyDuration = 10; //10 Minutes
+
+// export async function createUser(data) {
+//   const { email } = data;
+//   console.log(email);
+//   const otp = generateOtp();
+//   console.log(otp);
+//   try {
+//     // const hashedPassword = await bcrypt.hash(password, saltRounds);
+//     await otpService.sendOtp(email, otp);
+//     const currentTime = new Date();
+//     const expirtyTime = currentTime.setMinutes(
+//       currentTime.getMinutes() + otpExpirtyDuration
+//     );
+//     const user = await Verification.create({
+//       email,
+//       otp,
+//       expiresAt: expirtyTime,
+//     });
+//     console.log(user);
+//     console.log(user instanceof Verification);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+//   return await Verification.create({ email, otp, expiresAt: expirtyTime });
+// }
 
 export async function createUser(data) {
   const { email } = data;
   const otp = generateOtp();
-  try {
-    // const hashedPassword = await bcrypt.hash(password, saltRounds);
-    await otpService.sendOtp(email, otp);
-    const currentTime=new Date();
-    const expirtyTime= currentTime.setMinutes(currentTime.getMinutes()+otpExpirtyDuration);
-    const user = await Verification.create({ email, otp ,expiresAt:expirtyTime});
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  await otpService.sendOtp(email, otp);
+  const currentTime = new Date();
+  const expiryTime = new Date(
+    currentTime.getTime() + otpExpirtyDuration * 60000
+  ); // Set expiry time in minutes
+
+  // To check if user has already tried signup before
+  const user = await Verification.findOne({ where: { email } });
+  if (user) {
+    const user = await Verification.update(
+      { otp, expiresAt: expiryTime },
+      {
+        where: {
+          email,
+        },
+      }
+    );
+    return user;
   }
-  return await Verification.create({ email, otp ,expiresAt:expirtyTime});
+
+  try {
+    const user = await Verification.create({
+      email,
+      otp,
+      expiresAt: expiryTime,
+    });
+
+    return user;
+  } catch (error) {
+    console.error(error.message); // Logging the error
+    throw new Error("Failed to create user and store verification data"); // Throw the error so it can be handled by the caller
+  }
 }
 
 export async function getUserById(id) {
