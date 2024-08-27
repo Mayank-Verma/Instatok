@@ -14,9 +14,9 @@ export async function createUser(req, res) {
 
 export async function verifyUser(req, res) {
 
-  const user= userService.verifyUser(req.body);
-  if(user) res.status(200).json({status:"Success",message:"User verified successfully!"})
-  else  res.status(500).json({status:"Failed",message:"Invalid credentials!"})
+  const user= userService.verifyUser(req.body,res);
+  // if(user) res.status(200).json({status:"Success",message:"User verified successfully!"})
+
   
 }
 

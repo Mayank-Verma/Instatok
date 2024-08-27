@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { generateOtp } from "../utils/otpGenerator.js";
 import otpService from "./otpService.js";
+import { emailToUsername } from "../utils/emailToUsername.js";
 
 const saltRounds = 10;
 const jwtSecret = process.env.JWT_SECRET || "your_jwt_secret";
@@ -79,27 +80,46 @@ export async function getAllUsers() {
   return await User.findAll();
 }
 
-export async function verifyUser(data) {
-  const { username, email, otp } = data;
+export async function verifyUser(data,res) {
+  const { email, otp } = data;
+  
+
   try {
-    let user;
-    if (!email && username)
-      user = await User.findOne({ where: { otp: otp, username: username } });
-    else user = await User.findOne({ where: { otp: otp, email: email } });
+    let user = await Verification.findOne({ where: { email: email } });
+    //Check for user if already verified
+    if(user.dataValues.isUsed===true)
+      return res.json({status:"Failed",message:"User is already Verified"})
+    // check for Wrong OTP
+    if(user.dataValues.otp!=otp)
+      return res.json({status:"Failed",message:"Wrong OTP"})
+    //Check for Expired OTP:
+    let currentTime=new Date();
+    if(user.dataValues.expiresAt<currentTime)
+       return res.json({status:"Failed",message:"OTP is Expired"})
+    console.log('ExpiredTime',user.dataValues.expiresAt);
+    console.log('current Time',currentTime);
+    
+    
     if (user) {
-      const [updatedRows] = await User.update(
-        { isVerified: true },
-        { where: { otp: otp, email: email } }
+      const [updatedRows] = await Verification.update(
+        { isUsed: true },
+        { where: { email: email} }
       );
+      
+
+    // Creating new User in user table post verification
+     User.create({id:user.dataValues.id,username:emailToUsername(email),email})
+
 
       if (updatedRows > 0) {
-        console.log("User verified successfully!");
+        return res.status(200).json({status:"Success",message:"User verified successfully!"})
       } else {
-        console.log("Invalid credentials!");
+        return res.status(500).json({status:"Failed",message:"Invalid credentials!"})
       }
     }
-    return user;
+  
   } catch (err) {
-    res.status(500).json({ status: "Failed", message: "Invalid credentials!" });
+    console.log(err);
+    
   }
 }
