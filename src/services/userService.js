@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { generateOtp } from "../utils/otpGenerator.js";
 import otpService from "./otpService.js";
 import { emailToUsername } from "../utils/emailToUsername.js";
+import { up } from "../database/migrations/add-otp-to-users.cjs";
 
 const saltRounds = 10;
 const jwtSecret = process.env.JWT_SECRET || "your_jwt_secret";
@@ -80,46 +81,75 @@ export async function getAllUsers() {
   return await User.findAll();
 }
 
-export async function verifyUser(data,res) {
+export async function verifyUser(data, res) {
   const { email, otp } = data;
-  
 
   try {
     let user = await Verification.findOne({ where: { email: email } });
     //Check for user if already verified
-    if(user.dataValues.isUsed===true)
-      return res.json({status:"Failed",message:"User is already Verified"})
+    if (user.dataValues.isUsed === true)
+      return res.json({
+        status: "Failed",
+        message: "User is already Verified",
+      });
     // check for Wrong OTP
-    if(user.dataValues.otp!=otp)
-      return res.json({status:"Failed",message:"Wrong OTP"})
+    if (user.dataValues.otp != otp)
+      return res.json({ status: "Failed", message: "Wrong OTP" });
     //Check for Expired OTP:
-    let currentTime=new Date();
-    if(user.dataValues.expiresAt<currentTime)
-       return res.json({status:"Failed",message:"OTP is Expired"})
-    console.log('ExpiredTime',user.dataValues.expiresAt);
-    console.log('current Time',currentTime);
-    
-    
+    let currentTime = new Date();
+    if (user.dataValues.expiresAt < currentTime)
+      return res.json({ status: "Failed", message: "OTP is Expired" });
+    console.log("ExpiredTime", user.dataValues.expiresAt);
+    console.log("current Time", currentTime);
+
     if (user) {
       const [updatedRows] = await Verification.update(
         { isUsed: true },
-        { where: { email: email} }
+        { where: { email: email } }
       );
-      
 
-    // Creating new User in user table post verification
-     User.create({id:user.dataValues.id,username:emailToUsername(email),email})
-
+      // Creating new User in user table post verification
+      User.create({
+        id: user.dataValues.id,
+        username: emailToUsername(email),
+        email,
+      });
 
       if (updatedRows > 0) {
-        return res.status(200).json({status:"Success",message:"User verified successfully!"})
+        return res
+          .status(200)
+          .json({ status: "Success", message: "User verified successfully!" });
       } else {
-        return res.status(500).json({status:"Failed",message:"Invalid credentials!"})
+        return res
+          .status(500)
+          .json({ status: "Failed", message: "Invalid credentials!" });
       }
     }
-  
   } catch (err) {
     console.log(err);
-    
   }
+}
+
+export async function resendOtp(req,res) {
+  const { email } = req.body;
+  const user= await Verification.findOne({ where: { email } })
+  if(user.dataValues.isUsed===true)
+  {
+    return res.json({status:"failed",message:"User is already verified"})
+  }
+  const otp = generateOtp();
+  await otpService.sendOtp(email, otp);
+  const currentTime = new Date();
+  const expiryTime = new Date(
+    currentTime.getTime() + otpExpirtyDuration * 60000
+  ); // Set expiry time in minutes
+  const updatedRows = await Verification.update(
+    { otp, expiresAt: expiryTime },
+    {
+      where: {
+        email,
+      },
+    }
+  );
+  return updatedRows;
 }
