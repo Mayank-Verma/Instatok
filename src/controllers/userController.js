@@ -3,13 +3,11 @@ import * as userService from "../services/userService.js";
 export async function createUser(req, res) {
   try {
     const user = await userService.createUser(req.body);
-    res
-      .status(201)
-      .json({
-        status: "success",
-        message:
-          "OTP sent in mail, kindly login with otp to continue registration!",
-      });
+    res.status(201).json({
+      status: "success",
+      message:
+        "OTP sent in mail, kindly login with otp to continue registration!",
+    });
   } catch (err) {
     if (err.name === "SequelizeValidationError")
       res.status(500).json({ status: "failed", error: err.message });
@@ -44,15 +42,26 @@ export async function getAllUsers(req, res) {
 }
 
 export async function resendOtp(req, res) {
-  const updatedRows = await userService.resendOtp(req,res);
-  
-  if (updatedRows>0)
-    res
-      .status(200)
-      .json({
-        status: "success",
-        message: `OTP sent again on mail ID: ${req.body.email}`,
-      });
+  const updatedRows = await userService.resendOtp(req, res);
+
+  if (updatedRows > 0)
+    res.status(200).json({
+      status: "success",
+      message: `OTP sent again on mail ID: ${req.body.email}`,
+    });
   else
     res.status(400).json({ status: "failed", message: "Unable to send OTP" });
+}
+
+export async function updateUserInfo(req, res) {
+  const updatedRows = await userService.updateUserInfo(req);
+  if (updatedRows > 0)
+    res.status(200).json({
+      status: "success",
+      message: "user details has been updated successfully!",
+    });
+  else
+    res
+      .status(400)
+      .json({ status: "failed", message: "Unable to update user information" });
 }

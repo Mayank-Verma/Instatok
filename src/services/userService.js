@@ -11,31 +11,6 @@ const saltRounds = 10;
 const jwtSecret = process.env.JWT_SECRET || "your_jwt_secret";
 const otpExpirtyDuration = 10; //10 Minutes
 
-// export async function createUser(data) {
-//   const { email } = data;
-//   console.log(email);
-//   const otp = generateOtp();
-//   console.log(otp);
-//   try {
-//     // const hashedPassword = await bcrypt.hash(password, saltRounds);
-//     await otpService.sendOtp(email, otp);
-//     const currentTime = new Date();
-//     const expirtyTime = currentTime.setMinutes(
-//       currentTime.getMinutes() + otpExpirtyDuration
-//     );
-//     const user = await Verification.create({
-//       email,
-//       otp,
-//       expiresAt: expirtyTime,
-//     });
-//     console.log(user);
-//     console.log(user instanceof Verification);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-//   return await Verification.create({ email, otp, expiresAt: expirtyTime });
-// }
-
 export async function createUser(data) {
   const { email } = data;
   const otp = generateOtp();
@@ -86,11 +61,18 @@ export async function verifyUser(data, res) {
 
   try {
     let user = await Verification.findOne({ where: { email: email } });
+    // If user is not Found in DB
+    if (user === null) {
+      return res.status(404).json({
+        status: "failed",
+        message: "Not an existing user, kindly signup!",
+      });
+    }
     //Check for user if already verified
     if (user.dataValues.isUsed === true)
       return res.json({
-        status: "Failed",
-        message: "User is already Verified",
+        status: "Success",
+        message: "Successful Login!",
       });
     // check for Wrong OTP
     if (user.dataValues.otp != otp)
@@ -130,12 +112,11 @@ export async function verifyUser(data, res) {
   }
 }
 
-export async function resendOtp(req,res) {
+export async function resendOtp(req, res) {
   const { email } = req.body;
-  const user= await Verification.findOne({ where: { email } })
-  if(user.dataValues.isUsed===true)
-  {
-    return res.json({status:"failed",message:"User is already verified"})
+  const user = await Verification.findOne({ where: { email } });
+  if (user.dataValues.isUsed === true) {
+    return res.json({ status: "failed", message: "User is already verified" });
   }
   const otp = generateOtp();
   await otpService.sendOtp(email, otp);
@@ -150,6 +131,23 @@ export async function resendOtp(req,res) {
         email,
       },
     }
+  );
+  return updatedRows;
+}
+
+export async function updateUserInfo(req) {
+  let bio = null,
+    profilePicture = null,
+    website = null,
+    firstName = null,
+    lastName = null,
+    gender = null,
+    DOB = null;
+  ({ bio, profilePicture, website, firstName, lastName, gender, DOB } =
+    req.body);
+  const [updatedRows] = await User.update(
+    { bio, profilePicture, website, firstName, lastName, gender, DOB },
+    { where: { email: req.body.email } }
   );
   return updatedRows;
 }
