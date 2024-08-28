@@ -63,5 +63,5 @@ export async function updateUserInfo(req, res) {
   else
     res
       .status(400)
-      .json({ status: "failed", message: "Unable to update user information" });
+      .json({ status: "failed", message: "Unable to update user information, as user doesn't exist with provided email" });
 }

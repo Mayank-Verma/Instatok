@@ -142,12 +142,13 @@ export async function updateUserInfo(req) {
     firstName = null,
     lastName = null,
     gender = null,
-    DOB = null;
-  ({ bio, profilePicture, website, firstName, lastName, gender, DOB } =
+    DOB = null,
+    email = null;
+  ({ bio, profilePicture, website, firstName, lastName, gender, DOB, email } =
     req.body);
   const [updatedRows] = await User.update(
     { bio, profilePicture, website, firstName, lastName, gender, DOB },
-    { where: { email: req.body.email } }
+    { where: { email } }
   );
   return updatedRows;
 }
