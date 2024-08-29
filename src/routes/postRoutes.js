@@ -5,11 +5,12 @@ import {
   fetchAllPosts,
   fetchPostById,
 } from "../controllers/postController.js";
+import { authenticate } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/post-upload", upload.single("video"), uploadVideo);
-router.get("/fetchPosts", fetchAllPosts);
-router.get("/fetchPosts/:id", fetchPostById);
+router.post("/post-upload", authenticate, upload.single("video"), uploadVideo);
+router.get("/fetchPosts", authenticate, fetchAllPosts);
+router.get("/fetchPosts/:id", authenticate, fetchPostById);
 
 export default router;

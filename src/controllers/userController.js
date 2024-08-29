@@ -61,7 +61,13 @@ export async function updateUserInfo(req, res) {
       message: "user details has been updated successfully!",
     });
   else
-    res
-      .status(400)
-      .json({ status: "failed", message: "Unable to update user information, as user doesn't exist with provided email" });
+    res.status(400).json({
+      status: "failed",
+      message:
+        "Unable to update user information, as user doesn't exist with provided email",
+    });
+}
+
+export async function renewToken(req, res) {
+  userService.renewToken(req, res);
 }

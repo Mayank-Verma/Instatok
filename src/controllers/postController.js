@@ -1,10 +1,10 @@
 import supabase from "../config/supabase.js";
 import Post from "../models/post.js";
 import User from "../models/user.js";
-import { v4 as uuidv4 ,validate as uuidValidate} from "uuid";
+import { v4 as uuidv4, validate as uuidValidate } from "uuid";
+import jwt from "jsonwebtoken";
 
 const CDNURL = `https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/`;
-
 
 // Function for uploading post
 export const uploadVideo = async (req, res) => {
@@ -12,21 +12,31 @@ export const uploadVideo = async (req, res) => {
     return res.status(400).send("No file uploaded");
   }
 
-  // To check if UUID is a vaid UUID 
-  console.log(uuidValidate(req.body.userId))
-  if(!uuidValidate(req.body.userId)){
-    return res.status(400).send({status:"failed",message:"Invalid User ID, kindly provide a valid UUID"})
+  // Getting userId from header
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
+  const { id: userId } = jwt.decode(token);
+
+  // To check if UUID is a vaid UUID
+  console.log(uuidValidate(userId));
+  if (!uuidValidate(userId)) {
+    return res.status(400).send({
+      status: "failed",
+      message: "Not a valid User ID!",
+    });
   }
 
   // To check if UUID belongs to actual user present in DB
-  const user = await User.findOne({ where: { id: req.body.userId } });
-  if(user===null){
-    return res.status(400).send({status:"failed",message:"User is not verified, not allowed to upload post"})
+  const user = await User.findOne({ where: { id: userId } });
+  if (user === null) {
+    return res.status(400).send({
+      status: "failed",
+      message: "User not found, Not allowed to upload post!",
+    });
   }
 
-
   try {
-    const fileName = `${uuidv4()}-${req.file.originalname}`;
+    const fileName = `${userId}-${uuidv4()}-${req.file.originalname}`;
     const { data, error } = await supabase.storage
       .from("videos")
       .upload(fileName, req.file.buffer, {
@@ -42,15 +52,14 @@ export const uploadVideo = async (req, res) => {
       message: "Video uploaded successfully",
       "post link": `${postLink}`,
     });
-    Post.create({ post: postLink, userId: req.body.userId });
+    Post.create({ post: postLink, userId: userId });
   } catch (error) {
     console.error("Error uploading to Supabase:", error.message);
     res.status(500).send("An error occurred during the upload");
   }
 };
 
-
-// Function for fetching All posts 
+// Function for fetching All posts
 export const fetchAllPosts = async (req, res) => {
   const result = await Post.findAll();
   res.status(200).json(result);

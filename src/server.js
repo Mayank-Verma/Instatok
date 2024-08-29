@@ -9,7 +9,3 @@ db.sequelize.sync().then(() => {
   });
 });
 
-// app.listen(PORT, (err) => {
-//   if (err) console.log(err);
-//   else console.log(`Server is running smoothly on port ${PORT}`);
-// });

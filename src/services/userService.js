@@ -1,14 +1,14 @@
 import User from "../models/user.js";
 import Verification from "../models/verification.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { generateOtp } from "../utils/otpGenerator.js";
 import otpService from "./otpService.js";
 import { emailToUsername } from "../utils/emailToUsername.js";
-import { up } from "../database/migrations/add-otp-to-users.cjs";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../utils/generateTokens.js";
+import RefreshTokens from "../models/refresh_tokens.js";
 
-const saltRounds = 10;
-const jwtSecret = process.env.JWT_SECRET || "your_jwt_secret";
 const otpExpirtyDuration = 10; //10 Minutes
 
 export async function createUser(data) {
@@ -68,12 +68,33 @@ export async function verifyUser(data, res) {
         message: "Not an existing user, kindly signup!",
       });
     }
+
+    // Generating access token and refresh token
+    const accessToken = generateAccessToken(user.dataValues);
+    const refreshToken = generateRefreshToken(user.dataValues);
     //Check for user if already verified
-    if (user.dataValues.isUsed === true)
+    if (user.dataValues.isUsed === true) {
+      await RefreshTokens.update(
+        {
+          token: refreshToken,
+          expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        },
+        {
+          where: {
+            userId: user.dataValues.id,
+          },
+        }
+      );
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+      });
       return res.json({
         status: "Success",
         message: "Successful Login!",
+        accessToken,
       });
+    }
     // check for Wrong OTP
     if (user.dataValues.otp != otp)
       return res.json({ status: "Failed", message: "Wrong OTP" });
@@ -81,8 +102,6 @@ export async function verifyUser(data, res) {
     let currentTime = new Date();
     if (user.dataValues.expiresAt < currentTime)
       return res.json({ status: "Failed", message: "OTP is Expired" });
-    console.log("ExpiredTime", user.dataValues.expiresAt);
-    console.log("current Time", currentTime);
 
     if (user) {
       const [updatedRows] = await Verification.update(
@@ -90,17 +109,29 @@ export async function verifyUser(data, res) {
         { where: { email: email } }
       );
 
-      // Creating new User in user table post verification
+      // Creating new User in user table after successful verification
       User.create({
         id: user.dataValues.id,
         username: emailToUsername(email),
         email,
       });
 
+      await RefreshTokens.create({
+        token: refreshToken,
+        userId: user.dataValues.id,
+        expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      });
+
       if (updatedRows > 0) {
-        return res
-          .status(200)
-          .json({ status: "Success", message: "User verified successfully!" });
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          secure: true,
+        });
+        return res.status(200).json({
+          status: "Success",
+          message: "User verified successfully!",
+          accessToken,
+        });
       } else {
         return res
           .status(500)
@@ -151,4 +182,58 @@ export async function updateUserInfo(req) {
     { where: { email } }
   );
   return updatedRows;
+}
+
+export async function renewToken(req, res) {
+  try {
+    const { refreshToken: requestToken } = req.cookies;
+
+    if (!requestToken) {
+      return res.status(403).json({
+        status: "Missing token",
+        message: "Refresh token is required",
+      });
+    }
+
+    const storedToken = await RefreshTokens.findOne({
+      where: { token: requestToken },
+    });
+    if (!storedToken) {
+      return res
+        .status(403)
+        .json({ status: "failed", message: "Refresh token not found" });
+    }
+
+    // Accessing access token and decoding it's data
+    const authHeader = req.headers.authorization;
+    const oldAccessToken = authHeader && authHeader.split(" ")[1];
+    // extracting the payload from access token
+
+    // Generating Access and refresh Token
+    const newAccessToken = generateAccessToken({ id: storedToken.userId });
+    const newRefreshToken = generateRefreshToken({ id: storedToken.userId });
+
+    await RefreshTokens.update(
+      {
+        token: newRefreshToken,
+        expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      },
+      {
+        where: {
+          userId: storedToken.userId,
+        },
+      }
+    );
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: true,
+    });
+    return res.json({
+      status: "success",
+      message: "New Access and Refresh Token granted!",
+      accessToken: newAccessToken,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong in Generating token" });
+  }
 }
