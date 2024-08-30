@@ -15,11 +15,10 @@ export const authenticate = (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res
-      .status(403)
-      .json({
-        status: "failed",
-        message: "Session Expired, Kindly login again or renew Token",
-      });
+    res.status(403).json({
+      status: "failed",
+      message:
+        "Your Session has Expired, Kindly login again or renew your Token",
+    });
   }
 };

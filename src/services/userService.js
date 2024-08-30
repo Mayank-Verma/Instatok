@@ -8,6 +8,7 @@ import {
   generateRefreshToken,
 } from "../utils/generateTokens.js";
 import RefreshTokens from "../models/refresh_tokens.js";
+import verifyTokenFromAuthorizationAndGetPayload from "../utils/verifyTokenFromAuthorizationAndGetPayload.js";
 
 const otpExpirtyDuration = 10; //10 Minutes
 
@@ -167,19 +168,23 @@ export async function resendOtp(req, res) {
 }
 
 export async function updateUserInfo(req) {
+  const payload = verifyTokenFromAuthorizationAndGetPayload(
+    req.headers.authorization
+  );
+  if (payload === null) return 0;
+
   let bio = null,
     profilePicture = null,
     website = null,
     firstName = null,
     lastName = null,
     gender = null,
-    DOB = null,
-    email = null;
-  ({ bio, profilePicture, website, firstName, lastName, gender, DOB, email } =
+    DOB = null;
+  ({ bio, profilePicture, website, firstName, lastName, gender, DOB } =
     req.body);
   const [updatedRows] = await User.update(
     { bio, profilePicture, website, firstName, lastName, gender, DOB },
-    { where: { email } }
+    { where: { id: payload.id } }
   );
   return updatedRows;
 }
@@ -203,11 +208,6 @@ export async function renewToken(req, res) {
         .status(403)
         .json({ status: "failed", message: "Refresh token not found" });
     }
-
-    // Accessing access token and decoding it's data
-    const authHeader = req.headers.authorization;
-    const oldAccessToken = authHeader && authHeader.split(" ")[1];
-    // extracting the payload from access token
 
     // Generating Access and refresh Token
     const newAccessToken = generateAccessToken({ id: storedToken.userId });

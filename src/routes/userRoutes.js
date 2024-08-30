@@ -16,8 +16,8 @@ router.post("/signup", createUser);
 router.post("/login", verifyUser);
 router.get("/resendOtp", resendOtp);
 router.get("/refreshToken", renewToken);
-router.put("/updateUserInfo", updateUserInfo);
-router.get("/users/:id", getUser);
-router.get("/users", getAllUsers);
+router.put("/updateUserInfo", authenticate, updateUserInfo);
+router.get("/users/:id", authenticate, getUser);
+router.get("/users", authenticate, getAllUsers);
 
 export default router;

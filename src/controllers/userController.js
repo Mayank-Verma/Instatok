@@ -64,7 +64,7 @@ export async function updateUserInfo(req, res) {
     res.status(400).json({
       status: "failed",
       message:
-        "Unable to update user information, as user doesn't exist with provided email",
+        "Unable to update user information, as user doesn't exist or issue with Access Token",
     });
 }
 
