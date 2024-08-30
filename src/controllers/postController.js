@@ -36,7 +36,7 @@ export const uploadVideo = async (req, res) => {
   }
 
   try {
-    const fileName = `${userId}-${uuidv4()}-${req.file.originalname}`;
+    const fileName = `${userId}-${uuidv4()}`;
     const { data, error } = await supabase.storage
       .from("videos")
       .upload(fileName, req.file.buffer, {
