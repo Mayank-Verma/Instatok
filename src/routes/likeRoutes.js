@@ -1,14 +1,14 @@
 import express from "express";
 import {
-  AddPostsLike,
-  getPostsLike,
+  addPostsLike,
+  getPostLikes,
   unlikePost,
 } from "../controllers/likeController.js";
 import { authenticate } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
-router.post("/:postId/likes", authenticate, AddPostsLike);
-router.post("/:postId/unlike", authenticate, unlikePost);
-router.get("/:postId/likes", authenticate, getPostsLike);
+router.post("/:postId/like", authenticate, addPostsLike);
+router.delete("/:postId/like", authenticate, unlikePost);
+router.get("/:postId/like", authenticate, getPostLikes);
 
 export default router;

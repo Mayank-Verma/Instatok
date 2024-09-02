@@ -17,6 +17,8 @@ const db = {
 };
 
 // Defined Associations
+// User.hasMany(Post, { foreignKey: "postId" });
+// Post.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Likes, { foreignKey: "userId" });
 Post.hasMany(Likes, { foreignKey: "postId" });
 Likes.belongsTo(User, { foreignKey: "userId" });
