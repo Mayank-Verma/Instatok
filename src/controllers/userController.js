@@ -71,3 +71,18 @@ export async function updateUserInfo(req, res) {
 export async function renewToken(req, res) {
   userService.renewToken(req, res);
 }
+
+export async function getUserProfile(req, res) {
+  const user = await userService.getUserProfile(req);
+  if (user)
+    return res.status(200).json({
+      status: "success",
+      message: "User info retrieved successfully!",
+      data: user,
+    });
+  res.status(400).json({
+    status: "failed",
+    message: "Unable to find user Info",
+    data: user,
+  });
+}

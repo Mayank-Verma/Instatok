@@ -237,3 +237,17 @@ export async function renewToken(req, res) {
     res.status(500).json({ error: "Something went wrong in Generating token" });
   }
 }
+
+export async function getUserProfile(req) {
+  try {
+    const { id } = verifyTokenFromAuthorizationAndGetPayload(
+      req.headers.authorization
+    );
+
+    const user = await User.findByPk(id);
+    return user;
+  } catch (err) {
+    console.log("Error", err.message);
+    return null;
+  }
+}
