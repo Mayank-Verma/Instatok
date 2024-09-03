@@ -8,7 +8,7 @@ import { authenticate } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/:postId/comments", authenticate, getPostComments);
-router.post("/:postId/comments", authenticate, addPostComment);
+router.get("/comment/:postId", authenticate, getPostComments);
+router.post("/comment/:postId", authenticate, addPostComment);
 
 export default router;

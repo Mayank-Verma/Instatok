@@ -1,24 +1,24 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 
-const Comment = sequelize.define(
-  "Comment",
+const Hashtag = sequelize.define(
+  "Hashtag",
   {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    comment: {
-      type: DataTypes.TEXT,
+    hashtag: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },
 
   {
-    tableName: "posts_comments",
+    tableName: "post_hashtags",
     timestamps: true,
   }
 );
 
-export default Comment;
+export default Hashtag;

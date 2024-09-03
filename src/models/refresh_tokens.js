@@ -1,6 +1,5 @@
 import { DataTypes, UUIDV4 } from "sequelize";
 import sequelize from "../config/database.js";
-import { UUID } from "sequelize";
 
 const RefreshTokens = sequelize.define(
   "RefreshTokens",

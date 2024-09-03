@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
-import { defaultValueSchemable } from "sequelize/lib/utils";
+import User from "./user.js";
+import Post from "./post.js";
 
 const Likes = sequelize.define(
   "Likes",
@@ -13,6 +14,20 @@ const Likes = sequelize.define(
     isActive: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
+    },
+    userId: {
+      type: DataTypes.UUID,
+      references: {
+        model: User,
+        key: "id",
+      },
+    },
+    postId: {
+      type: DataTypes.UUID,
+      references: {
+        model: Post,
+        key: "id",
+      },
     },
   },
 

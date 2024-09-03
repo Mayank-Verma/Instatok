@@ -47,8 +47,16 @@ export async function addPostsLike(data) {
 
 export async function unlikePost(data) {
   const { userId, postId } = data;
+  console.log("user Id", userId);
+  console.log("post Id", postId);
+
   const row = await Likes.findOne({ where: { userId, postId } });
-  console.log("row", row);
+  console.log("row->", row);
+
+  if (row === null) {
+    // no liked post found
+    return false;
+  }
 
   if (row.dataValues.isActive == false) return false;
   const [updatedRows] = await Likes.update(
@@ -64,30 +72,27 @@ export async function unlikePost(data) {
 }
 
 export async function getPostLikes(data) {
+  console.log(Likes.associations);
   try {
     const { postId } = data;
-    let userIDList = await Likes.findAll({
-      attributes: ["userId"],
-      where: { postId },
-    });
-    userIDList = userIDList.map((userDetails) => {
-      return userDetails.dataValues.userId;
-    });
-
-    const usersList = await User.findAll({
-      where: {
-        id: {
-          [Op.in]: userIDList,
+    let userIDList = await User.findAll({
+      attributes: [
+        "id",
+        "username",
+        "email",
+        "profilePicture",
+        "firstName",
+        "lastName",
+      ], // Fetch only the required user attributes
+      include: [
+        {
+          model: Likes, // Include the Likes model
+          attributes: [], // Exclude all attributes from the join table
+          where: { id: postId }, // Filter likes by the specific post ID
         },
-      },
+      ],
     });
-    console.log("usersList", usersList);
 
-    return usersList;
-
-    // let userIDList = await User.findAll({
-    //   include: [{ model: Post, where: { postId: id } }],
-    // });
     return userIDList;
   } catch (err) {
     console.log("Error message:", err.message);
