@@ -2,6 +2,7 @@ import { Op } from "sequelize";
 import Likes from "../models/likes.js";
 import User from "../models/user.js";
 import Post from "../models/post.js";
+import sequelize from "sequelize";
 
 export async function addPostsLike(data) {
   const { userId, postId } = data;
@@ -75,7 +76,7 @@ export async function getPostLikes(data) {
   console.log(Likes.associations);
   try {
     const { postId } = data;
-    let userIDList = await User.findAll({
+    let userIDList = await Post.findAll({
       attributes: [
         "id",
         "username",
@@ -84,11 +85,23 @@ export async function getPostLikes(data) {
         "firstName",
         "lastName",
       ], // Fetch only the required user attributes
+
+      where: {
+        id: postId,
+      },
       include: [
         {
-          model: Likes, // Include the Likes model
-          attributes: [], // Exclude all attributes from the join table
-          where: { id: postId }, // Filter likes by the specific post ID
+          model: Likes,
+          include: [
+            {
+              model: User, // Include the Likes model
+              // attributes: [], // Exclude all attributes from the join table
+              // where: { i }, // Filter likes by the specific post ID
+            },
+          ],
+          // Include the Likes model
+          // attributes: [], // Exclude all attributes from the join table
+          where: { isActive: true }, // Filter likes by the specific post ID
         },
       ],
     });

@@ -37,7 +37,8 @@ Comment.belongsTo(User, { foreignKey: "userId" });
 
 // Likes table association with the User Table
 Likes.belongsTo(User, { foreignKey: "userId" });
-// Likes table ass
+// Likes table association
+Post.hasMany(Likes, { foreignKey: "postId" });
 Likes.belongsTo(Post, { foreignKey: "postId" });
 // 2.Post and Comment relationship
 // A post can have many comments, but each comment belongs to only one post.
