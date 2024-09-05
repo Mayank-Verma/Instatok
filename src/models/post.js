@@ -19,7 +19,13 @@ const Post = sequelize.define(
       allowNull: false,
       unique: false,
     },
+    description: {
+      type: DataTypes.TEXT,
+    },
+    isPublic: { type: DataTypes.BOOLEAN, defaultValue: true },
+    allowComments: { type: DataTypes.BOOLEAN, defaultValue: true },
   },
+
   {
     tableName: "posts",
     timestamps: true,

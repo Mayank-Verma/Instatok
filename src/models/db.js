@@ -26,8 +26,8 @@ User.hasMany(Post, { foreignKey: "userId" });
 Post.belongsTo(User, { foreignKey: "userId" });
 // User Table association with Post table via Likes table
 // A user can like many posts, and each post can be liked by many users.
-User.belongsToMany(Post, { through: Likes, foreignKey: "userId" });
-Post.belongsToMany(User, { through: Likes, foreignKey: "postId" });
+// User.belongsToMany(Post, { through: Likes, foreignKey: "userId" });
+// Post.belongsToMany(User, { through: Likes, foreignKey: "postId" });
 /* when modeling comments, a different approach is usually taken because comments themselves are 
  typically not just a join table but a separate entity with its own attributes (like content, timestamp, etc.). */
 //  1. User and Comment Relationship

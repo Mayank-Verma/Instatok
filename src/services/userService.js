@@ -9,6 +9,10 @@ import {
 } from "../utils/generateTokens.js";
 import RefreshTokens from "../models/refresh_tokens.js";
 import verifyTokenFromAuthorizationAndGetPayload from "../utils/verifyTokenFromAuthorizationAndGetPayload.js";
+import Post from "../models/post.js";
+import Likes from "../models/likes.js";
+import Comment from "../models/comments.js";
+import { Sequelize } from "sequelize";
 
 const otpExpirtyDuration = 10; //10 Minutes
 
@@ -243,8 +247,32 @@ export async function getUserProfile(req) {
     const { id } = verifyTokenFromAuthorizationAndGetPayload(
       req.headers.authorization
     );
+    console.log("id->", id);
 
-    const user = await User.findByPk(id);
+    const user = await User.findOne({
+      where: { id },
+      include: {
+        model: Post,
+        where: { userId: id },
+        required: false,
+        include: [
+          {
+            model: Likes,
+            required: false,
+          },
+          {
+            model: Comment,
+            required: false,
+            include: [
+              {
+                model: User,
+                attributes: ["id", "username", "profilePicture"],
+              },
+            ],
+          },
+        ],
+      },
+    });
     return user;
   } catch (err) {
     console.log("Error", err.message);
