@@ -1,6 +1,4 @@
-import { Model } from "sequelize";
 import Comment from "../models/comments.js";
-import Post from "../models/post.js";
 import verifyTokenFromAuthorizationAndGetPayload from "../utils/verifyTokenFromAuthorizationAndGetPayload.js";
 
 export async function addPostComment(req) {
@@ -16,7 +14,29 @@ export async function addPostComment(req) {
 }
 
 export async function getPostComments(req) {
-  const { id: userId } = verifyTokenFromAuthorizationAndGetPayload(
-    req.headers.authorization
-  );
+  try {
+    const postId = req.params.postId;
+    const result = await Comment.findAll({ where: { postId } });
+    return result;
+  } catch (err) {
+    console.log("Something went wrong while getting comments: ", err);
+    return false;
+  }
+}
+
+export async function deleteComment(req) {
+  try {
+    const postId = req.params.postId;
+    const { id: userId } = verifyTokenFromAuthorizationAndGetPayload(
+      req.headers.authorization
+    );
+    const comment = await Comment.findOne({ where: { userId, postId } });
+    if (comment === null) return false;
+    // deleting comment
+    Comment.destroy({ where: { userId, postId } });
+    return true;
+  } catch (error) {
+    console.log("Error in deleting comment: ", error);
+    return false;
+  }
 }

@@ -23,11 +23,25 @@ export const getPostComments = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "comments on post retrieved successfully!",
-      comments: result,
+      data: result,
     });
   else
     res.status(500).json({
       status: "failed",
       message: "Something went wrong!",
+    });
+};
+
+export const deleteComment = async (req, res) => {
+  const result = await commentService.deleteComment(req);
+  if (result)
+    res.status(200).json({
+      status: "success",
+      message: "comment on post deleted successfully!",
+    });
+  else
+    res.status(500).json({
+      status: "failed",
+      message: "Either user not authorized or comment is unavailable!",
     });
 };

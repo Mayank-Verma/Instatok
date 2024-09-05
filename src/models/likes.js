@@ -11,10 +11,6 @@ const Likes = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    isActive: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-    },
     userId: {
       type: DataTypes.UUID,
       references: {
