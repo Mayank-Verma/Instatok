@@ -1,4 +1,5 @@
 import Comment from "../database/models/comments.js";
+import User from "../database/models/user.js";
 import verifyTokenFromAuthorizationAndGetPayload from "../utils/verifyTokenFromAuthorizationAndGetPayload.js";
 
 export async function addPostComment(req) {
@@ -16,7 +17,17 @@ export async function addPostComment(req) {
 export async function getPostComments(req) {
   try {
     const postId = req.params.postId;
-    const result = await Comment.findAll({ where: { postId } });
+    const result = await Comment.findAll({
+      where: { postId },
+      attributes: ["comment"],
+      include: [
+        {
+          model: User,
+          required: false,
+          attributes: ["username", "firstName", "lastName", "profilePicture"],
+        },
+      ],
+    });
     return result;
   } catch (err) {
     console.log("Something went wrong while getting comments: ", err);

@@ -279,26 +279,30 @@ export async function getUserProfile(req) {
 
     const user = await User.findOne({
       where: { id },
+      attributes: [
+        "id",
+        "username",
+        "email",
+        "profilePicture",
+        "website",
+        "firstName",
+        "lastName",
+        "gender",
+        "DOB",
+        "bio",
+      ],
       include: {
         model: Post,
+        attributes: [
+          "id",
+          "post",
+          "userId",
+          "description",
+          "isPublic",
+          "allowComments",
+        ],
         where: { userId: id },
         required: false,
-        include: [
-          {
-            model: Likes,
-            required: false,
-          },
-          {
-            model: Comment,
-            required: false,
-            include: [
-              {
-                model: User,
-                attributes: ["id", "username", "profilePicture"],
-              },
-            ],
-          },
-        ],
       },
     });
     return user;
