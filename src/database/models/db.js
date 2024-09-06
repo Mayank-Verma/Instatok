@@ -25,7 +25,7 @@ const db = {
 // User table association with Post table
 // A single user can create multiple posts, but each post is created by only one user.
 User.hasMany(Post, { foreignKey: "userId" });
-Post.belongsTo(User, { foreignKey: "userId" });
+Post.belongsTo(User, { foreignKey: "userId", as: "uploadedBy" });
 // User Table association with Post table via Likes table
 // A user can like many posts, and each post can be liked by many users.
 // User.belongsToMany(Post, { through: Likes, foreignKey: "userId" });

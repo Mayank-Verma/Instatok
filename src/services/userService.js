@@ -53,11 +53,40 @@ export async function createUser(data) {
 }
 
 export async function getUserById(id) {
-  return await User.findByPk(id);
+  return await User.findOne({
+    attributes: [
+      "id",
+      "username",
+      "email",
+      "profilePicture",
+      "website",
+      "firstName",
+      "lastName",
+      "gender",
+      "DOB",
+      "bio",
+    ],
+    where: {
+      id,
+    },
+  });
 }
 
 export async function getAllUsers() {
-  return await User.findAll();
+  return await User.findAll({
+    attributes: [
+      "id",
+      "username",
+      "email",
+      "profilePicture",
+      "website",
+      "firstName",
+      "lastName",
+      "gender",
+      "DOB",
+      "bio",
+    ],
+  });
 }
 
 export async function verifyUser(data, res) {

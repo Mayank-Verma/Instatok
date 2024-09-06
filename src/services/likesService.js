@@ -1,6 +1,5 @@
 import Likes from "../database/models/likes.js";
 import User from "../database//models/user.js";
-import Post from "../database/models/post.js";
 
 export async function addPostsLike(data) {
   const { userId, postId } = data;
@@ -41,40 +40,29 @@ export async function unlikePost(data) {
   }
 }
 
-export async function getPostLikes(data) {
-  console.log(Likes.associations);
+export async function getPostLikes(postId) {
   try {
-    const { postId } = data;
-    let userIDList = await Post.findAll({
-      attributes: [
-        "id",
-        "username",
-        "email",
-        "profilePicture",
-        "firstName",
-        "lastName",
-      ], // Fetch only the required user attributes
-
+    const likesCount = await Likes.count({
       where: {
-        id: postId,
+        postId,
       },
+    });
+    const userList = await Likes.findAll({
+      where: {
+        postId,
+      },
+      attributes: [], // We don't need the likes details in the response
       include: [
         {
-          model: Likes,
-          include: [
-            {
-              model: User, // Include the Likes model
-              // attributes: [], // Exclude all attributes from the join table
-              // where: { i }, // Filter likes by the specific post ID
-            },
-          ],
-          // Include the Likes model
-          // attributes: [], // Exclude all attributes from the join table
+          model: User, // Include user details
+          attributes: ["username", "firstName", "lastName", "profilePicture"], // Fetch required user fields
         },
       ],
     });
-
-    return userIDList;
+    return {
+      likesCount,
+      userList,
+    };
   } catch (err) {
     console.log("Error message:", err.message);
     return null;

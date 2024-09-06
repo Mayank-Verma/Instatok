@@ -39,17 +39,14 @@ export const addPostsLike = async (req, res) => {
 export const getPostLikes = async (req, res) => {
   try {
     const postId = req.params.postId;
-    const result = await likesService.getPostLikes({
-      postId,
-    });
-    console.log("result->", result);
-
+    const result = await likesService.getPostLikes(postId);
     if (result !== null)
       res.status(200).json({
         status: "success",
         message: "Post likes retrieved succesfully!",
-        totalLikes: `${result.length}`,
-        data: result,
+        postId,
+        likesCount: result.likesCount,
+        users: result.userList.map((like) => like.User),
       });
     else
       res.status(400).json({

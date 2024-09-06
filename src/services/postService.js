@@ -1,7 +1,11 @@
 import { v4 as uuidv4, validate as uuidValidate } from "uuid";
+import { Sequelize } from "sequelize";
 import supabase from "../config/supabase.js";
 import Post from "../database/models/post.js";
 import verifyTokenFromAuthorizationAndGetPayload from "../utils/verifyTokenFromAuthorizationAndGetPayload.js";
+import Likes from "../database/models/likes.js";
+import Comment from "../database/models/comments.js";
+import User from "../database/models/user.js";
 
 const CDNURL = `https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/`;
 
@@ -47,7 +51,48 @@ export async function uploadVideo(req) {
 
 export async function fetchAllPosts() {
   try {
-    return await Post.findAll();
+    return await Post.findAll({
+      attributes: [
+        "id",
+        "post",
+        "description",
+        "isPublic",
+        "allowComments",
+        [
+          Sequelize.fn(
+            "COUNT",
+            Sequelize.fn("DISTINCT", Sequelize.col("Likes.id"))
+          ),
+          "likesCount",
+        ], // Count distinct likes
+        [
+          Sequelize.fn(
+            "COUNT",
+            Sequelize.fn("DISTINCT", Sequelize.col("Comments.id"))
+          ),
+          "commentsCount",
+        ], // Count distinct comments
+      ],
+      include: [
+        {
+          required: false,
+          model: Likes,
+          attributes: [], // Exclude individual like details
+        },
+        {
+          required: false,
+          model: Comment,
+          attributes: [], // Exclude individual comment details
+        },
+        {
+          model: User,
+          as: "uploadedBy",
+          required: false,
+          attributes: ["id", "username", "firstName", "lastName"],
+        },
+      ],
+      group: ["Post.id", "uploadedBy.id"], // Group by post ID to ensure accurate counting
+    });
   } catch (err) {
     console.log("error while fetching post", err);
   }
@@ -55,7 +100,50 @@ export async function fetchAllPosts() {
 
 export async function fetchPostById(req) {
   try {
-    return await Post.findByPk(`${req.params.id}`);
+    const postId = req.params.postId;
+    return await Post.findOne({
+      attributes: [
+        "id",
+        "post",
+        "description",
+        "isPublic",
+        "allowComments",
+        [
+          Sequelize.fn(
+            "COUNT",
+            Sequelize.fn("DISTINCT", Sequelize.col("Likes.id"))
+          ),
+          "likesCount",
+        ], // Count distinct likes
+        [
+          Sequelize.fn(
+            "COUNT",
+            Sequelize.fn("DISTINCT", Sequelize.col("Comments.id"))
+          ),
+          "commentsCount",
+        ], // Count distinct comments
+      ],
+      include: [
+        {
+          required: false,
+          model: Likes,
+          attributes: [], // Exclude individual like details
+        },
+        {
+          required: false,
+          model: Comment,
+          attributes: [], // Exclude individual comment details
+        },
+        {
+          model: User,
+          as: "uploadedBy",
+          required: false,
+          attributes: ["id", "username", "firstName", "lastName"],
+        },
+      ],
+      where: { id: postId },
+      group: ["Post.id", "uploadedBy.id"], // Group by post ID to ensure accurate counting
+    });
   } catch (error) {
     console.log("error in fetching post by id", error);
   }
