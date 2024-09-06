@@ -1,6 +1,6 @@
 import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 import supabase from "../config/supabase.js";
-import Post from "../models/post.js";
+import Post from "../database/models/post.js";
 import verifyTokenFromAuthorizationAndGetPayload from "../utils/verifyTokenFromAuthorizationAndGetPayload.js";
 
 const CDNURL = `https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/`;

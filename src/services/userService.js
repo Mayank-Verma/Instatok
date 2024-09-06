@@ -1,5 +1,5 @@
-import User from "../models/user.js";
-import Verification from "../models/verification.js";
+import User from "../database/models/user.js";
+import Verification from "../database/models/verification.js";
 import { generateOtp } from "../utils/otpGenerator.js";
 import otpService from "./otpService.js";
 import { emailToUsername } from "../utils/emailToUsername.js";
@@ -7,12 +7,11 @@ import {
   generateAccessToken,
   generateRefreshToken,
 } from "../utils/generateTokens.js";
-import RefreshTokens from "../models/refresh_tokens.js";
+import RefreshTokens from "../database/models/refresh_tokens.js";
 import verifyTokenFromAuthorizationAndGetPayload from "../utils/verifyTokenFromAuthorizationAndGetPayload.js";
-import Post from "../models/post.js";
-import Likes from "../models/likes.js";
-import Comment from "../models/comments.js";
-import { Sequelize } from "sequelize";
+import Post from "../database/models/post.js";
+import Likes from "../database/models/likes.js";
+import Comment from "../database/models/comments.js";
 
 const otpExpirtyDuration = 10; //10 Minutes
 

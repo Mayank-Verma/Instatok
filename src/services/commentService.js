@@ -1,4 +1,4 @@
-import Comment from "../models/comments.js";
+import Comment from "../database/models/comments.js";
 import verifyTokenFromAuthorizationAndGetPayload from "../utils/verifyTokenFromAuthorizationAndGetPayload.js";
 
 export async function addPostComment(req) {

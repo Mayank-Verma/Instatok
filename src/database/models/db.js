@@ -1,4 +1,4 @@
-import sequelize from "../config/database.js";
+import sequelize from "../../config/database.js";
 import Likes from "./likes.js";
 import Post from "./post.js";
 import RefreshTokens from "./refresh_tokens.js";
@@ -6,6 +6,7 @@ import User from "./user.js";
 import Verification from "./verification.js";
 import Comment from "./comments.js";
 import Hashtag from "./hashtags.js";
+import Follower from "./follower.js";
 
 const db = {
   Verification,
@@ -15,6 +16,7 @@ const db = {
   Likes,
   Comment,
   Hashtag,
+  Follower,
   sequelize,
 };
 
@@ -54,6 +56,11 @@ Hashtag.belongsToMany(Post, {
   through: "postHashtagsMeta",
   foreignKey: "hashtagId",
 });
+// Self referential associations
+User.hasMany(Follower, { foreignKey: "follower_id", as: "Followers" });
+User.hasMany(Follower, { foreignKey: "following_id", as: "Following" });
+Follower.belongsTo(User, { foreignKey: "follower_id", as: "FollowerUser" });
+Follower.belongsTo(User, { foreignKey: "following_id", as: "FollowingUser" });
 /* A Comment is dependent on both the User who made it and the Post it belongs to. 
 Each comment is unique and specific to a post, which is why it has a one-to-many relationship with both User and Post.*/
 /*A Hashtag, on the other hand, is a shared entity. Multiple posts can refer to the same hashtag, and the relationship doesn't uniquely define the hashtag.

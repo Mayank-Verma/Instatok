@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+import sequelize from "../../config/database.js";
 
 const Verification = sequelize.define(
   "Verification",
@@ -25,7 +25,7 @@ const Verification = sequelize.define(
     isUsed: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue:false
+      defaultValue: false,
     },
   },
   {

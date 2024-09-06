@@ -1,7 +1,6 @@
-import { Op } from "sequelize";
-import Likes from "../models/likes.js";
-import User from "../models/user.js";
-import Post from "../models/post.js";
+import Likes from "../database/models/likes.js";
+import User from "../database//models/user.js";
+import Post from "../database/models/post.js";
 
 export async function addPostsLike(data) {
   const { userId, postId } = data;
