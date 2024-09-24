@@ -34,25 +34,25 @@ function App() {
           Reels
         </button>
         <VideoComponent
-          videoURL="https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/71927741-5200-4545-b102-9519c3c4f657-60c8fc91-84c1-4427-9259-af9db5687644"
+          videoURL="https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/85a85731-3e2b-42a0-899b-ed94492756eb-4921b2b2-fa44-40ec-9fcd-5e0b9af295c4"
           isAutoplayEnabled={isAutoplayEnabled}
         />
       </section>
       <section>
         <VideoComponent
-          videoURL="https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/71927741-5200-4545-b102-9519c3c4f657-60c8fc91-84c1-4427-9259-af9db5687644"
+          videoURL="https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/85a85731-3e2b-42a0-899b-ed94492756eb-f0a42b73-0a61-4903-a156-d525cebf29b8"
           isAutoplayEnabled={isAutoplayEnabled}
         />
       </section>
       <section>
         <VideoComponent
-          videoURL="https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/71927741-5200-4545-b102-9519c3c4f657-60c8fc91-84c1-4427-9259-af9db5687644"
+          videoURL="https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/85a85731-3e2b-42a0-899b-ed94492756eb-43f930ed-f8b1-44fe-9c96-47a14f67590f"
           isAutoplayEnabled={isAutoplayEnabled}
         />
       </section>
       <section>
         <VideoComponent
-          videoURL="https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/71927741-5200-4545-b102-9519c3c4f657-60c8fc91-84c1-4427-9259-af9db5687644"
+          videoURL="https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/85a85731-3e2b-42a0-899b-ed94492756eb-166fbc2f-5135-4b3e-9c36-20601a28d436"
           isAutoplayEnabled={isAutoplayEnabled}
         />
       </section>
