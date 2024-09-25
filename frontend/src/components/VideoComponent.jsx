@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import Lottie from "lottie-react";
+import heart from "../../public/Animation - 1727229232930.json";
 
 const VideoComponent = ({ videoURL, isAutoplayEnabled }) => {
   const videoRef = useRef(null);
@@ -41,7 +43,7 @@ const VideoComponent = ({ videoURL, isAutoplayEnabled }) => {
 
   return (
     <div style={{ position: "relative" }}>
-      <Button
+      {/* <Button
         variant="destructive"
         style={{
           position: "absolute",
@@ -50,14 +52,15 @@ const VideoComponent = ({ videoURL, isAutoplayEnabled }) => {
         }}
       >
         save
-      </Button>
+      </Button> */}
+      <Lottie animationData={heart} loop={false} />
       <video
         autoPlay
         ref={videoRef}
         muted
         loop
         controls
-        style={{ height: "100vh", width: "400px" }}
+        style={{ height: "90vh", width: "400px" }}
       >
         <source src={videoURL} type="video/mp4" />
         Your browser does not support the video tag.
