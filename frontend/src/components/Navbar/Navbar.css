@@ -1,0 +1,57 @@
+/* Navbar container */
+.navbar {
+  display: flex;
+  flex-direction: column; /* Make it vertical */
+  width: 14rem; /* Set width of the navbar, around 240px (15 * 16px) */
+  height: 100vh; /* Make the navbar full height, based on the viewport height */
+  background-color: #ffffff; /* Background color */
+  padding: 1.25rem; /* Padding around the navbar (20px = 1.25 * 16px) */
+  box-sizing: border-box;
+  border-right: 2px solid #fafafa;
+}
+
+/* Links inside the navbar */
+.navbar a {
+  padding: 1rem; /* Spacing inside each link, around 16px */
+  text-decoration: none;
+  font-size: 1.125rem; /* Font size of the links, around 18px (1.125 * 16px) */
+  color: #000;
+  display: block;
+  transition: 0.3s;
+}
+
+.navbarOptions {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar a:hover {
+  cursor: pointer;
+}
+/* Change color on hover */
+/* .navbar a:hover {
+  background-color: #575757;
+  color: white;
+} */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    width: 12rem; /* Reduce the navbar width on smaller screens */
+  }
+
+  .navbar a {
+    font-size: 1rem; /* Adjust font size on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    width: 100vw; /* Make navbar full width on very small screens */
+    height: auto; /* Adjust height to fit content */
+  }
+
+  .navbar a {
+    padding: 0.75rem; /* Reduce padding for smaller screens */
+  }
+}
