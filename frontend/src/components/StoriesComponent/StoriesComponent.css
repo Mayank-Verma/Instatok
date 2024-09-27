@@ -1,0 +1,18 @@
+.embla {
+  overflow: hidden;
+  /* border: 1px solid black; */
+  /* margin-left: 1rem; */
+  /* display: inline-block; */
+  width: 70rem;
+  height: 10rem;
+  padding-top: 1.6rem;
+  user-select: none;
+}
+.embla__container {
+  display: flex;
+  width: 120px;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
