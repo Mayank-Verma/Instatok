@@ -7,14 +7,14 @@
   background-color: #ffffff; /* Background color */
   padding: 1.25rem; /* Padding around the navbar (20px = 1.25 * 16px) */
   box-sizing: border-box;
-  border-right: 2px solid #fafafa;
+  border-right: 1px solid #dbdbdb;
 }
 
 /* Links inside the navbar */
 .navbar a {
-  padding: 1rem; /* Spacing inside each link, around 16px */
+  padding: 0.8rem; /* Spacing inside each link, around 16px */
   text-decoration: none;
-  font-size: 1.125rem; /* Font size of the links, around 18px (1.125 * 16px) */
+  font-size: 1rem; /* Font size of the links, around 18px (1.125 * 16px) */
   color: #000;
   display: block;
   transition: 0.3s;

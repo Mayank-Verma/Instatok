@@ -10,11 +10,11 @@ export default function Story() {
       }}
     >
       <div>
-        <img src={unwatchedStoryRing} width="101rem"></img>
+        <img src={unwatchedStoryRing} width="90rem"></img>
         <img
           src="https://avatar.iran.liara.run/public"
-          width="90rem"
-          style={{ position: "absolute", top: "0.4rem", left: "1rem" }}
+          width="80rem"
+          style={{ position: "absolute", top: "0.35rem", left: "1.25rem" }}
         ></img>
       </div>
       <div

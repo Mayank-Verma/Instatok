@@ -29,7 +29,10 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <a href="#home" onClick={() => dispatch(home())}>
-        <div className="navbarOptions" style={{ marginBottom: "1rem" }}>
+        <div
+          className="navbarOptions"
+          style={{ width: "8rem", marginRight: "4rem" }}
+        >
           <img src={instatokLogoLight}></img>
         </div>
       </a>

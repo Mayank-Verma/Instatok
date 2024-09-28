@@ -10,7 +10,7 @@ import FollowSuggestions from "./components/FollowSuggestions/FollowSuggestions"
 function App() {
   return (
     <Provider store={store}>
-      <FollowSuggestions />
+      <Home />
     </Provider>
   );
 }

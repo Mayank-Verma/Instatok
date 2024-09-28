@@ -6,7 +6,7 @@ import Story from "../Story/Story";
 export default function StoriesComponent() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
-    dragFree: true,
+    dragFree: false,
     align: "start",
   });
   useEffect(() => {

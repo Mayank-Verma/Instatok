@@ -1,4 +1,4 @@
-export default function FollowSuggestions() {
+export default function SwitchProfile() {
   return (
     <div
       style={{
@@ -9,21 +9,26 @@ export default function FollowSuggestions() {
         height: "3.5rem",
         alignItems: "center",
         // border: "1px solid black",
-        marginBottom: "0.5rem",
-        
+        marginTop: "2rem",
+        color: "#262626",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
         <img
-          src="https://avatar.iran.liara.run/public"
-          style={{ width: "3rem", height: "3rem", display: "block" }}
+          src="https://github.com/shadcn.png"
+          style={{
+            width: "3rem",
+            height: "3rem",
+            borderRadius: "50%",
+            display: "block",
+          }}
         ></img>
         <div>
           <div style={{ fontWeight: "600" }}>username</div>
           <div
             style={{
               lineHeight: "0.7rem",
-              fontSize: "0.8rem",
+              fontSize: "0.9rem",
               color: "#8E8E8E",
             }}
           >
@@ -35,7 +40,7 @@ export default function FollowSuggestions() {
         href="#"
         style={{ fontWeight: "600", fontSize: "0.8", color: "#0095F6" }}
       >
-        Follow
+        Switch
       </a>
     </div>
   );
