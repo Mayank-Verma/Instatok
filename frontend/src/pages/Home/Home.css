@@ -1,4 +1,5 @@
 main {
   display: flex;
-  gap: 2.5rem;
+  justify-content: space-evenly;
+  margin-left: 14rem;
 }

@@ -6,6 +6,7 @@ import store from "../src/store/store"; // Import the store
 import Story from "./components/Story/Story";
 import StoriesComponent from "./components/StoriesComponent/StoriesComponent";
 import FollowSuggestions from "./components/FollowSuggestions/FollowSuggestions";
+import ImagePost from "./components/ImagePost/ImagePost";
 
 function App() {
   return (

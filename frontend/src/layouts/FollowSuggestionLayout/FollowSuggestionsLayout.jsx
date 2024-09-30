@@ -13,6 +13,7 @@ function FollowSuggestionsLayout() {
           marginBottom: "0.4rem",
           fontWeight: "600",
           color: "#262626",
+          // paddingRight: "2rem",
         }}
       >
         <div style={{ color: "#8E8E8E" }}>Suggested for you</div>

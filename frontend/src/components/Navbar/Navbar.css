@@ -8,6 +8,7 @@
   padding: 1.25rem; /* Padding around the navbar (20px = 1.25 * 16px) */
   box-sizing: border-box;
   border-right: 1px solid #dbdbdb;
+  position: fixed;
 }
 
 /* Links inside the navbar */
