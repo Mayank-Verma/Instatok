@@ -18,7 +18,7 @@ export default function ImagePost() {
         <div
           style={{
             display: "flex",
-            width: "9.5vw",
+            width: "9.5rem",
             justifyContent: "space-between",
             fontWeight: "600",
             alignItems: "center",
@@ -26,11 +26,20 @@ export default function ImagePost() {
         >
           <img
             src="https://avatar.iran.liara.run/public"
-            style={{ borderRadius: "50%", width: "2.2vw" }}
+            style={{ borderRadius: "50%", width: "2.4rem" }}
           ></img>
           <span>username</span>
-          <span style={{ color: "#8E8E8E" }}>.</span>
-          <span style={{ color: "#8E8E8E" }}>5h</span>
+          <div
+            style={{
+              display: "flex",
+              width: "1.5rem",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <span style={{ color: "#8E8E8E", paddingBottom: "0.4rem" }}>.</span>
+            <span style={{ color: "#8E8E8E" }}>5h</span>
+          </div>
         </div>
         <a href="#" style={{ display: "block" }}>
           <img src={dots} width="16rem"></img>
@@ -49,7 +58,7 @@ export default function ImagePost() {
         <div
           style={{
             display: "flex",
-            width: "7vw",
+            width: "7rem",
             justifyContent: "space-between",
           }}
         >
@@ -66,6 +75,22 @@ export default function ImagePost() {
         <a href="#">
           <img src={save}></img>
         </a>
+      </div>
+      <div
+        style={{
+          fontWeight: "600",
+          fontSize: "0.9rem",
+          marginTop: "0.5rem",
+        }}
+      >
+        <span style={{ marginRight: "0.3rem" }}>0</span>
+        <span>likes</span>
+      </div>
+      <div style={{ fontSize: "0.9rem" }}>
+        <span style={{ fontWeight: "600", marginRight: "0.3rem" }}>
+          username
+        </span>
+        <span>This is some random description, please ignore this text.</span>
       </div>
     </div>
   );
