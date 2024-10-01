@@ -3,6 +3,8 @@ export default function ImagePostFeed() {
   return (
     <div>
       <ImagePost />
+      <ImagePost />
+      <ImagePost />
     </div>
   );
 }
