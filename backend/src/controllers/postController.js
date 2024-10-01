@@ -53,3 +53,15 @@ export const deletePost = async (req, res) => {
       message: "Either user is not the owner or post already deleted!",
     });
 };
+
+export const uploadImages = async (req, res) => {
+  try {
+    // Handle multiple image uploads, max 10 images
+    const uploadedFiles = req.files; // Use req.files to access the array of files
+    res.send(
+      `Images uploaded: ${uploadedFiles.map((file) => file.path).join(", ")}`
+    );
+  } catch (error) {
+    res.status(400).send("Error uploading images");
+  }
+};

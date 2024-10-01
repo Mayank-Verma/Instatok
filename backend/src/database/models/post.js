@@ -23,6 +23,10 @@ const Post = sequelize.define(
     },
     isPublic: { type: DataTypes.BOOLEAN, defaultValue: true },
     allowComments: { type: DataTypes.BOOLEAN, defaultValue: true },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
 
   {
