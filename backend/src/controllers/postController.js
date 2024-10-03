@@ -1,8 +1,8 @@
 import * as postService from "../services/postService.js";
 
 // Function for uploading post
-export const uploadVideo = async (req, res) => {
-  const result = await postService.uploadVideo(req);
+export const uploadPost = async (req, res) => {
+  const result = await postService.uploadPost(req);
   if (result == "fileNotFound")
     return res.status(400).send({
       status: "failed",
@@ -11,7 +11,7 @@ export const uploadVideo = async (req, res) => {
   else if (result == "uploaded")
     return res.status(200).json({
       status: "success",
-      message: "Video uploaded successfully",
+      message: "post uploaded successfully",
     });
   else
     return res.status(500).send({
@@ -20,9 +20,26 @@ export const uploadVideo = async (req, res) => {
     });
 };
 
-// Function for fetching All posts
-export const fetchAllPosts = async (req, res) => {
-  const result = await postService.fetchAllPosts();
+// Function for fetching All video posts
+export const fetchAllVideos = async (req, res) => {
+  // Get page and limit from query parameters, set defaults if not provided
+  const page = parseInt(req.query.page) || 1; // Default to page 1
+  const limit = parseInt(req.query.limit) || 10; // Default to 10 images per page
+  console.log("page-->", page);
+  console.log("limit-->", limit);
+  // Calculate offset
+  const offset = (page - 1) * limit;
+  const result = await postService.fetchAllVideos({ page, limit, offset });
+  res.status(200).json({
+    status: "success",
+    message: "post retrieved successfully",
+    data: result,
+  });
+};
+
+// Function for fetching All Images posts
+export const fetchAllImages = async (req, res) => {
+  const result = await postService.fetchAllImages();
   res.status(200).json({
     status: "success",
     message: "post retrieved successfully",

@@ -6,6 +6,7 @@ import commentRoutes from "./routes/commentRoutes.js";
 import likeRoutes from "./routes/likeRoutes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import followRoutes from "./routes/followRoutes.js";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
@@ -19,5 +20,17 @@ app.use("/api/v1", followRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);
+
+// Use CORS middleware
+// app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // or use '*' to allow all origins
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+  })
+);
+// Handle preflight requests
+app.options("*", cors());
 
 export default app;

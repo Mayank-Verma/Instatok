@@ -5,7 +5,7 @@ import share from "../../assets/imagePostShare.svg";
 import save from "../../assets/imagePostSave.svg";
 export default function ImagePost() {
   return (
-    <div style={{ width: "28vw", paddingTop: "1rem", paddingBottom: "1rem" }}>
+    <div style={{ width: "30vw", paddingTop: "1rem", paddingBottom: "1rem" }}>
       <div
         style={{
           fontSize: "0.9rem",

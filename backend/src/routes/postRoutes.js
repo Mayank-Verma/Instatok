@@ -4,11 +4,11 @@ import {
   uploadVideoConfiguration,
 } from "../config/multer.js";
 import {
-  uploadVideo,
-  fetchAllPosts,
+  uploadPost,
+  fetchAllVideos,
+  fetchAllImages,
   fetchPostById,
   deletePost,
-  uploadImages,
 } from "../controllers/postController.js";
 import { authenticate } from "../middlewares/authMiddleware.js";
 
@@ -18,17 +18,18 @@ router.post(
   "/post-upload/video",
   authenticate,
   uploadVideoConfiguration.single("video"),
-  uploadVideo
+  uploadPost
 );
 
 router.post(
   "/post-upload/image",
   authenticate,
-  uploadImageConfiguration.array("images", 10),
-  uploadImages
+  uploadImageConfiguration.single("image"),
+  uploadPost
 );
 
-router.get("/fetchPosts", authenticate, fetchAllPosts);
+router.get("/fetchPosts/videos", authenticate, fetchAllVideos);
+router.get("/fetchPosts/images", authenticate, fetchAllImages);
 router.get("/fetchPosts/:postId", authenticate, fetchPostById);
 router.delete("/post/:postId", authenticate, deletePost);
 

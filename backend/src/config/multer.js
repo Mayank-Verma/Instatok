@@ -20,4 +20,4 @@ const uploadImageConfiguration = multer({
 
 const uploadVideoConfiguration = multer({ storage: storage });
 
-export { uploadVideoConfiguration, uploadImageConfiguration };
+export { uploadImageConfiguration, uploadVideoConfiguration };
