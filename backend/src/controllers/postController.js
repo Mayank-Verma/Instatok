@@ -43,7 +43,7 @@ export const fetchAllImages = async (req, res) => {
   res.status(200).json({
     status: "success",
     message: "post retrieved successfully",
-    data: result,
+    posts: result,
   });
 };
 

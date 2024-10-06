@@ -3,7 +3,16 @@ import heart from "../../assets/imagePostHeart.svg";
 import commment from "../../assets/imagePostComment.svg";
 import share from "../../assets/imagePostShare.svg";
 import save from "../../assets/imagePostSave.svg";
-export default function ImagePost() {
+import { timePassedSincePostUpdated } from "../../utils/timePassedSincePostUpdated.js";
+export default function ImagePost({ postInfo }) {
+  const {
+    post: postURL,
+    commentsCount,
+    likesCount,
+    uploadedBy,
+    description,
+    updatedAt,
+  } = postInfo;
   return (
     <div style={{ width: "30vw", paddingTop: "1rem", paddingBottom: "1rem" }}>
       <div
@@ -17,36 +26,53 @@ export default function ImagePost() {
       >
         <div
           style={{
-            display: "flex",
-            width: "9.5rem",
-            justifyContent: "space-between",
+            // display: "flex",
+            width: "60rem",
+            // justifyContent: "space-between",
             fontWeight: "600",
-            alignItems: "center",
+            // alignItems: "center",
           }}
         >
           <img
-            src="https://avatar.iran.liara.run/public"
-            style={{ borderRadius: "50%", width: "2.4rem" }}
-          ></img>
-          <span>username</span>
-          <div
+            src={
+              uploadedBy.profilePicture
+                ? uploadedBy.profilePicture
+                : "https://avatar.iran.liara.run/public"
+            }
             style={{
-              display: "flex",
-              width: "1.5rem",
-              justifyContent: "space-between",
+              borderRadius: "50%",
+              width: "2.4rem",
+              marginRight: "0.3rem",
+              display: "inline",
+            }}
+          ></img>
+          <span style={{ marginRight: "0.3rem" }}>{uploadedBy.username}</span>
+          <span
+            style={{
+              width: "7rem",
+              display: "inline-flex",
               alignItems: "center",
             }}
           >
-            <span style={{ color: "#8E8E8E", paddingBottom: "0.4rem" }}>.</span>
-            <span style={{ color: "#8E8E8E" }}>5h</span>
-          </div>
+            <span
+              style={{
+                color: "#8E8E8E",
+                marginRight: "0.3rem",
+              }}
+            >
+              .
+            </span>
+            <span style={{ color: "#8E8E8E" }}>
+              {timePassedSincePostUpdated(updatedAt)}
+            </span>
+          </span>
         </div>
         <a href="#" style={{ display: "block" }}>
-          <img src={dots} width="16rem"></img>
+          <img src={dots} width="28rem"></img>
         </a>
       </div>
       <div style={{ objectFit: "cover" }}>
-        <img src="https://images.unsplash.com/photo-1444021465936-c6ca81d39b84?q=80&w=2039&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
+        <img src={postURL}></img>
       </div>
       <div
         style={{
@@ -83,14 +109,14 @@ export default function ImagePost() {
           marginTop: "0.5rem",
         }}
       >
-        <span style={{ marginRight: "0.3rem" }}>0</span>
+        <span style={{ marginRight: "0.3rem" }}>{likesCount}</span>
         <span>likes</span>
       </div>
       <div style={{ fontSize: "0.9rem" }}>
         <span style={{ fontWeight: "600", marginRight: "0.3rem" }}>
-          username
+          {uploadedBy.username}
         </span>
-        <span>This is some random description, please ignore this text.</span>
+        <span>{description}</span>
       </div>
     </div>
   );

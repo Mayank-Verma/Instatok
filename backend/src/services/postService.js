@@ -116,6 +116,7 @@ export async function fetchAllImages() {
         "description",
         "isPublic",
         "allowComments",
+        "updatedAt",
         [
           Sequelize.fn(
             "COUNT",
@@ -157,6 +158,7 @@ export async function fetchAllImages() {
         },
       ],
       group: ["Post.id", "uploadedBy.id"], // Group by post ID to ensure accurate counting
+      order: [["updatedAt", "DESC"]],
     });
   } catch (err) {
     console.log("error while fetching post", err);

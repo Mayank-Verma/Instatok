@@ -9,6 +9,22 @@ import followRoutes from "./routes/followRoutes.js";
 import cors from "cors";
 
 const app = express();
+// Use CORS middleware
+// app.use(cors());
+app.use(
+  cors({
+    origin: "*", // or use '*' to allow all origins
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+    credentials: true,
+  })
+);
+// Error Handling Middleware
+app.use(errorHandler);
+
+// Handle preflight requests
+app.options("*", cors());
+
 app.use(express.json());
 app.use(cookieParser());
 // Routes
@@ -17,20 +33,5 @@ app.use("/api/v1", userRoutes);
 app.use("/api/v1", likeRoutes);
 app.use("/api/v1", commentRoutes);
 app.use("/api/v1", followRoutes);
-
-// Error Handling Middleware
-app.use(errorHandler);
-
-// Use CORS middleware
-// app.use(cors());
-app.use(
-  cors({
-    origin: "http://localhost:5173", // or use '*' to allow all origins
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify allowed methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
-  })
-);
-// Handle preflight requests
-app.options("*", cors());
 
 export default app;
