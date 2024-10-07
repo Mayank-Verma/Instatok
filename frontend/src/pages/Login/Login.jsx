@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import SignupForm from "@/components/SignupForm/SignupForm.jsx";
+import LoginForm from "@/components/LoginForm/LoginForm.jsx";
 import SignupLoginVideo from "@/components/SignupLoginVideo/SignupLoginVideo.jsx";
 
-export default function Signup() {
+export default function Login() {
   const {
     register,
     handleSubmit,
@@ -27,7 +27,7 @@ export default function Signup() {
           zIndex: "9999 ",
         }}
       >
-        <SignupForm />
+        <LoginForm />
       </div>
       <SignupLoginVideo />
     </div>

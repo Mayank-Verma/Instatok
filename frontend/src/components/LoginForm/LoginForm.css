@@ -47,6 +47,10 @@ input {
   padding-left: 8rem;
 }
 
+.input-field {
+  width: 14rem;
+}
+
 .error {
   margin-left: 5.6rem;
   font-size: 0.8rem;

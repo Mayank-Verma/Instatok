@@ -9,6 +9,7 @@ import FollowSuggestions from "./components/FollowSuggestions/FollowSuggestions"
 import ImagePost from "./components/ImagePost/ImagePost";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Signup from "./pages/Signup/Signup.jsx";
+import Login from "./pages/Login/Login.jsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Provider store={store}>
         <Routes>
           <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<Home />} />
           <Route path="/discover" element={<Home />} />
