@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="home-main-container">
         <div
           style={{
             display: "flex",

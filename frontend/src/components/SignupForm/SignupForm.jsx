@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import "./SignupForm.css";
-import logo from "../../assets/Instatok white theme.png";
+import logo from "../../assets/Instatok dark theme.png";
 
 const SignupForm = () => {
   const {
@@ -92,7 +92,7 @@ const SignupForm = () => {
           display: "flex",
           alignItems: "center",
           gap: "0.4rem",
-          color: "#262626",
+          color: "white",
         }}
       >
         <span className="line"></span>

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import SignupForm from "@/components/SignupForm/SignupForm.jsx";
-import SignupLoginCarousel from "@/components/SignupLoginCarousel/SignupLoginCarousel.jsx";
 import "./Signup.css";
+import SignupLoginVideo from "@/components/SignupLoginVideo/SignupLoginVideo.jsx";
 
 export default function Signup() {
   const {
@@ -14,19 +14,18 @@ export default function Signup() {
 
   console.log(watch("example")); // watch input value by passing the name of it
   return (
-    <main
+    <div
       style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
         height: "100vh",
       }}
     >
-      <div>
+      <div
+        style={{ position: "fixed", top: "25%", left: "48%", zIndex: "99999" }}
+      >
         <SignupForm />
       </div>
-      <SignupLoginCarousel />
-    </main>
+      <SignupLoginVideo />
+    </div>
   );
 }
 
