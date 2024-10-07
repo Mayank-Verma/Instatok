@@ -36,6 +36,9 @@ const SignupForm = () => {
   return (
     <div className="main-container">
       <img src={logo} className="logo" />
+      <div style={{ color: "#F9F6EE" }}>
+        Step into the realm of Digitalverse
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-container">
           <div>
@@ -44,7 +47,9 @@ const SignupForm = () => {
               <input
                 id="name"
                 type="text"
+                autoComplete="off"
                 {...register("fname", { required: "*First Name is required" })}
+                style={{ paddingLeft: "0.2rem" }}
               />
             </div>
             {errors.fname && (
@@ -58,7 +63,9 @@ const SignupForm = () => {
               <input
                 id="lname"
                 type="text"
+                autoComplete="off"
                 {...register("lname", { required: "*Last Name is required" })}
+                style={{ paddingLeft: "0.2rem" }}
               />
             </div>
             {errors.lname && (
@@ -72,7 +79,9 @@ const SignupForm = () => {
               <input
                 id="email"
                 type="email"
+                autoComplete="off"
                 {...register("email", { required: "*Email is required" })}
+                style={{ paddingLeft: "0.2rem" }}
               />
             </div>
 

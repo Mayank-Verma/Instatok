@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 30rem;
-  width: 22rem;
+  height: 34rem;
+  width: 24rem;
   margin-left: -10vw;
   gap: 1rem;
   justify-content: center;
@@ -67,6 +67,7 @@ input {
   color: #fff;
   height: 2.5rem;
   border-radius: 0.5rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
 .google-login {

@@ -20,7 +20,7 @@ export default function Signup() {
       }}
     >
       <div
-        style={{ position: "fixed", top: "25%", left: "48%", zIndex: "99999" }}
+        style={{ position: "fixed", top: "10vw", left: "48%", zIndex: "99999" }}
       >
         <SignupForm />
       </div>
