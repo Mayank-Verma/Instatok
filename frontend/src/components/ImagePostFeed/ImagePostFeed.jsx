@@ -15,7 +15,7 @@ export default function ImagePostFeed() {
     if (savedToken) {
       setToken(savedToken); // Update the token in state
     }
-  }, [token]);
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,7 +42,7 @@ export default function ImagePostFeed() {
     };
 
     fetchData();
-  }, []); // Empty dependency array means it runs once on mount
+  }, [token]); // Empty dependency array means it runs once on mount
   // Check if data is null or if posts is not available
   // console.log("data->", data);
   // console.log("data.posts->", data.posts);

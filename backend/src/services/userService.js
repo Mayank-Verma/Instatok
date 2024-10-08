@@ -93,7 +93,7 @@ export async function verifyUser(data, res) {
   const { email, otp } = data;
 
   try {
-    let user = await Verification.findOne({ where: { email: email } });
+    let user = await Verification.findOne({ where: { email, otp } });
     // If user is not Found in DB
     if (user === null) {
       return res.status(404).json({

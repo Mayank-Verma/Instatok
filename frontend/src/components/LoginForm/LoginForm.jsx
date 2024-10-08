@@ -94,11 +94,13 @@ const LoginForm = () => {
                 <label htmlFor="email">OTP</label>
                 <input
                   id="otp"
-                  type="text"
+                  type="number"
                   autoComplete="off"
                   {...register("otp", { required: "*OTP is required" })}
                   style={{ paddingLeft: "0.2rem" }}
                   className="input-field"
+                  min="0000"
+                  max="9999"
                 />
               </div>
 
