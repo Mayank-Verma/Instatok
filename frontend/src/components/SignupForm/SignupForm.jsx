@@ -4,17 +4,66 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import "./SignupForm.css";
 import logo from "../../assets/Instatok dark theme.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
+  const [isEmailSubmitted, SetIsEmailSubmitted] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   // Handle form submission (Email Signup)
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    SetIsEmailSubmitted(() => true);
     console.log("Form Data: ", data);
+    const { email, otp } = data;
+    console.log("Form Data: ", email, otp);
+
+    if (!otp)
+      try {
+        // Send POST request to /Signup API for sending the OTP
+        await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again later.");
+      }
+
+    if (otp)
+      try {
+        // Send POST request to /Signup API for sending the OTP
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        // Check if login was successful
+        if (response.ok) {
+          const result = await response.json();
+          // Store the access and refresh tokens in localStorage
+          localStorage.setItem("accessToken", result.accessToken);
+          localStorage.setItem("refreshToken", result.refreshToken);
+          alert("Login successful! Token saved in browser.");
+          navigate("/home"); // Navigate to home page
+        } else {
+          alert("Login failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again later.");
+      }
   };
 
   // Handle Google login success
