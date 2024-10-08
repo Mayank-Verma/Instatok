@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 
 import ImagePost from "../ImagePost/ImagePost";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU3MGJlZmJkLTMyYjgtNGE4Ni04YTZiLTY0ZjJmN2IzMDMwYiIsImlhdCI6MTcyODIzNDM2NSwiZXhwIjoxNzI4MjM3OTY1fQ.NARoyg1M_QS70LjwX-7revxTjlfrDLpnrjD5TQelU9g"; // add token here
+
 export default function ImagePostFeed() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    // Read the token from localStorage
+    const savedToken = localStorage.getItem("accessToken");
+
+    if (savedToken) {
+      setToken(savedToken); // Update the token in state
+    }
+  }, [token]);
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form";
 import LoginForm from "@/components/LoginForm/LoginForm.jsx";
 import SignupLoginVideo from "@/components/SignupLoginVideo/SignupLoginVideo.jsx";
 
+const LoginPageBackgroundVideo =
+  "https://videos.pexels.com/video-files/17588869/17588869-uhd_2560_1440_24fps.mp4";
+
 export default function Login() {
   const {
     register,
@@ -29,7 +32,7 @@ export default function Login() {
       >
         <LoginForm />
       </div>
-      <SignupLoginVideo />
+      <SignupLoginVideo videoURL={LoginPageBackgroundVideo} />
     </div>
   );
 }

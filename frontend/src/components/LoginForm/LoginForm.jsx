@@ -3,6 +3,7 @@ import "./LoginForm.css";
 import logo from "../../assets/Instatok dark theme.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [isEmailSubmitted, SetIsEmailSubmitted] = useState(false);
@@ -12,9 +13,54 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   // Handle form submission (Email Signup)
-  const onSubmit = (data) => {
-    console.log("Form Data: ", data);
+  const onSubmit = async (data) => {
+    SetIsEmailSubmitted(() => true);
+    const { email, otp } = data;
+    console.log("Form Data: ", email, otp);
+
+    if (!otp)
+      try {
+        // Send POST request to /Signup API for sending the OTP
+        await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again later.");
+      }
+
+    if (otp)
+      try {
+        // Send POST request to /Signup API for sending the OTP
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        // Check if login was successful
+        if (response.ok) {
+          const result = await response.json();
+          // Store the access and refresh tokens in localStorage
+          localStorage.setItem("accessToken", result.accessToken);
+          localStorage.setItem("refreshToken", result.refreshToken);
+          alert("Login successful! Token saved in browser.");
+          navigate("/home"); // Navigate to home page
+        } else {
+          alert("Login failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again later.");
+      }
   };
   return (
     <div className="main-container">
@@ -41,6 +87,26 @@ const LoginForm = () => {
               <div className="error">{errors.email.message}</div>
             )}
           </div>
+
+          {isEmailSubmitted && (
+            <div>
+              <div className="input">
+                <label htmlFor="email">OTP</label>
+                <input
+                  id="otp"
+                  type="text"
+                  autoComplete="off"
+                  {...register("otp", { required: "*OTP is required" })}
+                  style={{ paddingLeft: "0.2rem" }}
+                  className="input-field"
+                />
+              </div>
+
+              {errors.email && (
+                <div className="error">{errors.email.message}</div>
+              )}
+            </div>
+          )}
         </div>
         <div>
           <button type="submit" className="signup">

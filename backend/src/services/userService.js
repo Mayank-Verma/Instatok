@@ -118,14 +118,11 @@ export async function verifyUser(data, res) {
           },
         }
       );
-      res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: true,
-      });
       return res.json({
         status: "Success",
         message: "Successful Login!",
         accessToken,
+        refreshToken,
       });
     }
     // check for Wrong OTP
@@ -156,14 +153,11 @@ export async function verifyUser(data, res) {
       });
 
       if (updatedRows > 0) {
-        res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure: true,
-        });
         return res.status(200).json({
           status: "Success",
           message: "User verified successfully!",
           accessToken,
+          refreshToken,
         });
       } else {
         return res
@@ -223,7 +217,7 @@ export async function updateUserInfo(req) {
 
 export async function renewToken(req, res) {
   try {
-    const { refreshToken: requestToken } = req.cookies;
+    const { refreshToken: requestToken } = req.body;
 
     if (!requestToken) {
       return res.status(403).json({
@@ -256,14 +250,11 @@ export async function renewToken(req, res) {
         },
       }
     );
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: true,
-    });
     return res.json({
       status: "success",
       message: "New Access and Refresh Token granted!",
       accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
     });
   } catch (error) {
     res.status(500).json({ error: "Something went wrong in Generating token" });
