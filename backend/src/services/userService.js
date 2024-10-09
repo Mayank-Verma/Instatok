@@ -15,7 +15,7 @@ import Comment from "../database/models/comments.js";
 
 const otpExpirtyDuration = 10; //10 Minutes
 
-export async function createUser(data) {
+export async function signup(data) {
   const { email } = data;
   const otp = generateOtp();
   await otpService.sendOtp(email, otp);
@@ -89,9 +89,16 @@ export async function getAllUsers() {
   });
 }
 
-export async function verifyUser(data, res) {
+export async function login(data, res) {
   const { email, otp } = data;
 
+  if (!otp && email) {
+    let user = await User.findOne({ where: { email } });
+    return res.status(200).json({
+      status: "failed",
+      message: "User exists in DB but need otp for verification",
+    });
+  }
   try {
     let user = await Verification.findOne({ where: { email, otp } });
     // If user is not Found in DB

@@ -1,8 +1,8 @@
 import * as userService from "../services/userService.js";
 
-export async function createUser(req, res) {
+export async function signup(req, res) {
   try {
-    const user = await userService.createUser(req.body);
+    const user = await userService.signup(req.body);
     res.status(201).json({
       status: "success",
       message:
@@ -14,7 +14,7 @@ export async function createUser(req, res) {
   }
 }
 
-export async function verifyUser(req, res) {
+export async function login(req, res) {
   const user = userService.verifyUser(req.body, res);
   // if(user) res.status(200).json({status:"Success",message:"User verified successfully!"})
 }

@@ -1,7 +1,7 @@
 import express from "express";
 import {
-  createUser,
-  verifyUser,
+  signup,
+  login,
   getUser,
   getAllUsers,
   resendOtp,
@@ -13,8 +13,8 @@ import { authenticate } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/signup", createUser);
-router.post("/login", verifyUser);
+router.post("/signup", signup);
+router.post("/login", login);
 router.get("/resendOtp", resendOtp);
 router.post("/refreshToken", renewToken);
 router.get("/myProfile", authenticate, getUserProfile);

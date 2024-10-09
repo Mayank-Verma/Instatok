@@ -17,20 +17,23 @@ const LoginForm = () => {
 
   // Handle form submission (Email Signup)
   const onSubmit = async (data) => {
-    SetIsEmailSubmitted(() => true);
     const { email, otp } = data;
     console.log("Form Data: ", email, otp);
 
     if (!otp)
       try {
         // Send POST request to /Signup API for sending the OTP
-        await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
         });
+        const responseData = await response.json();
+        // Getting ok respone if user is registered and show otp field else ask user to register
+        if (response.ok) SetIsEmailSubmitted(() => true);
+        console.log(responseData);
       } catch (error) {
         console.error("Error:", error);
         alert("An error occurred. Please try again later.");

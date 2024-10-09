@@ -92,32 +92,36 @@ const SignupForm = () => {
         <div className="input-container">
           <div>
             <div className="input">
-              <label htmlFor="fname">First name</label>
+              <label htmlFor="firstName">First name</label>
               <input
                 id="name"
                 type="text"
                 autoComplete="off"
-                {...register("fname", { required: "*First Name is required" })}
+                {...register("firstName", {
+                  required: "*First Name is required",
+                })}
                 style={{ paddingLeft: "0.2rem" }}
               />
             </div>
-            {errors.fname && (
-              <div className="error">{errors.fname.message}</div>
+            {errors.firstName && (
+              <div className="error">{errors.firstName.message}</div>
             )}
           </div>
 
           <div>
             <div className="input">
-              <label htmlFor="lname">Last name</label>
+              <label htmlFor="lastName">Last name</label>
               <input
-                id="lname"
+                id="lastName"
                 type="text"
                 autoComplete="off"
-                {...register("lname", { required: "*Last Name is required" })}
+                {...register("lastName", {
+                  required: "*Last Name is required",
+                })}
                 style={{ paddingLeft: "0.2rem" }}
               />
             </div>
-            {errors.lname && (
+            {errors.lastName && (
               <div className="error">{errors.lname.message}</div>
             )}
           </div>
