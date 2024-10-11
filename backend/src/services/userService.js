@@ -92,13 +92,6 @@ export async function getAllUsers() {
 export async function login(data, res) {
   const { email, otp } = data;
 
-  if (!otp && email) {
-    let user = await User.findOne({ where: { email } });
-    return res.status(200).json({
-      status: "failed",
-      message: "User exists in DB but need otp for verification",
-    });
-  }
   try {
     let user = await Verification.findOne({ where: { email, otp } });
     // If user is not Found in DB
@@ -147,30 +140,30 @@ export async function login(data, res) {
       );
 
       // Creating new User in user table after successful verification
-      User.create({
-        id: user.dataValues.id,
-        username: emailToUsername(email),
-        email,
-      });
+      // User.create({
+      //   id: user.dataValues.id,
+      //   username: emailToUsername(email),
+      //   email,
+      // });
 
-      await RefreshTokens.create({
-        token: refreshToken,
-        userId: user.dataValues.id,
-        expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      });
+      // await RefreshTokens.create({
+      //   token: refreshToken,
+      //   userId: user.dataValues.id,
+      //   expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      // });
 
-      if (updatedRows > 0) {
-        return res.status(200).json({
-          status: "Success",
-          message: "User verified successfully!",
-          accessToken,
-          refreshToken,
-        });
-      } else {
-        return res
-          .status(500)
-          .json({ status: "Failed", message: "Invalid credentials!" });
-      }
+      // if (updatedRows > 0) {
+      //   return res.status(200).json({
+      //     status: "Success",
+      //     message: "User verified successfully!",
+      //     accessToken,
+      //     refreshToken,
+      //   });
+      // } else {
+      //   return res
+      //     .status(500)
+      //     .json({ status: "Failed", message: "Invalid credentials!" });
+      // }
     }
   } catch (err) {
     console.log(err);
@@ -308,4 +301,10 @@ export async function getUserProfile(req) {
     console.log("Error", err.message);
     return null;
   }
+}
+
+export async function isExistingUser(req) {
+  const { email } = req.body;
+  const user = await User.findOne({ where: { email } });
+  return user;
 }

@@ -14,6 +14,18 @@ export async function signup(req, res) {
   }
 }
 
+export async function isExistingUser(req, res) {
+  const user = await userService.isExistingUser(req);
+  if (user)
+    res
+      .status(200)
+      .json({ status: "success", message: "user exists in Database" });
+  else
+    res
+      .status(404)
+      .json({ status: "failed", message: "user doesn't exists in Database" });
+}
+
 export async function login(req, res) {
   const user = userService.verifyUser(req.body, res);
   // if(user) res.status(200).json({status:"Success",message:"User verified successfully!"})
