@@ -19,7 +19,8 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
+  /* width: 40rem; */
 }
 .logo {
   width: 10rem;
@@ -30,7 +31,7 @@ form {
 .input {
   display: flex;
   width: 17rem;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .input-container {
@@ -47,6 +48,10 @@ input {
   padding-left: 8rem;
 }
 
+label {
+  min-width: 5.2rem;
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -54,7 +59,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .input-field {
-  width: 14rem;
+  width: 16rem;
 }
 
 .error {

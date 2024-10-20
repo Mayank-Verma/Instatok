@@ -15,41 +15,92 @@ import Comment from "../database/models/comments.js";
 
 const otpExpirtyDuration = 10; //10 Minutes
 
-export async function signup(data) {
-  const { email } = data;
-  const otp = generateOtp();
-  await otpService.sendOtp(email, otp);
-  const currentTime = new Date();
-  const expiryTime = new Date(
-    currentTime.getTime() + otpExpirtyDuration * 60000
-  ); // Set expiry time in minutes
-
-  // To check if user has already tried signup before
-  const user = await Verification.findOne({ where: { email } });
-  if (user) {
-    const user = await Verification.update(
-      { otp, expiresAt: expiryTime },
-      {
-        where: {
-          email,
-        },
-      }
-    );
-    return user;
-  }
+export async function signup(req, res) {
+  const { email, firstName, lastName, otp } = req.body;
 
   try {
-    const user = await Verification.create({
+    let user = await Verification.findOne({ where: { email } });
+
+    // If user is not Found in DB
+    if (user === null) {
+      return res.status(404).json({
+        status: "failed",
+        message: "Not an existing user, kindly signup!",
+      });
+    }
+
+    // check for Wrong OTP
+    if (user.dataValues.otp != otp)
+      return res.json({ status: "Failed", message: "Wrong OTP" });
+    //Check for Expired OTP:
+    let currentTime = new Date();
+    if (user.dataValues.expiresAt < currentTime)
+      return res.json({ status: "Failed", message: "OTP is Expired" });
+
+    // Updating isUsed column in verification table
+    await Verification.update({ isUsed: true }, { where: { email: email } });
+
+    // Creating new User in user table after successful verification
+    await User.create({
+      id: user.dataValues.id,
+      username: emailToUsername(email),
       email,
-      otp,
-      expiresAt: expiryTime,
+      firstName,
+      lastName,
     });
 
-    return user;
-  } catch (error) {
-    console.error(error.message); // Logging the error
-    throw new Error("Failed to create user and store verification data"); // Throw the error so it can be handled by the caller
+    // Generating access token and refresh token
+    const accessToken = generateAccessToken(user.dataValues);
+    const refreshToken = generateRefreshToken(user.dataValues);
+
+    return res.status(200).json({
+      status: "success",
+      message: "Successful signup!",
+      accessToken,
+      refreshToken,
+    });
+  } catch (err) {
+    console.log("error in creating user and signup");
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+      error: err,
+    });
   }
+
+  // const otp = generateOtp();
+  // await otpService.sendOtp(email, otp);
+  // const currentTime = new Date();
+  // const expiryTime = new Date(
+  // currentTime.getTime() + otpExpirtyDuration * 60000
+  // ); // Set expiry time in minutes
+
+  // To check if user has already tried signup before
+  // const user = await Verification.findOne({ where: { email } });
+  // if (user) {
+  //   const user = await Verification.update(
+  //     { otp, expiresAt: expiryTime },
+  //     {
+  //       where: {
+  //         email,
+  //       },
+  //     }
+  //   );
+  //   return user;
+  // }
+
+  // try {
+  //   const user = await Verification.create({
+  //     email,
+  //     otp,
+  //     expiresAt: expiryTime,
+  //   });
+
+  //   return user;
+  // } catch (error) {
+  //   console.error(error.message); // Logging the error
+  //   throw new Error("Failed to create user and store verification data"); // Throw the error so it can be handled by the caller
+  // }
 }
 
 export async function getUserById(id) {
@@ -89,11 +140,12 @@ export async function getAllUsers() {
   });
 }
 
-export async function login(data, res) {
-  const { email, otp } = data;
+export async function login(req, res) {
+  const { email, otp } = req.body;
 
   try {
-    let user = await Verification.findOne({ where: { email, otp } });
+    let user = await Verification.findOne({ where: { email } });
+
     // If user is not Found in DB
     if (user === null) {
       return res.status(404).json({
@@ -101,6 +153,14 @@ export async function login(data, res) {
         message: "Not an existing user, kindly signup!",
       });
     }
+
+    // check for Wrong OTP
+    if (user.dataValues.otp != otp)
+      return res.json({ status: "Failed", message: "Wrong OTP" });
+    //Check for Expired OTP:
+    let currentTime = new Date();
+    if (user.dataValues.expiresAt < currentTime)
+      return res.json({ status: "Failed", message: "OTP is Expired" });
 
     // Generating access token and refresh token
     const accessToken = generateAccessToken(user.dataValues);
@@ -125,26 +185,12 @@ export async function login(data, res) {
         refreshToken,
       });
     }
-    // check for Wrong OTP
-    if (user.dataValues.otp != otp)
-      return res.json({ status: "Failed", message: "Wrong OTP" });
-    //Check for Expired OTP:
-    let currentTime = new Date();
-    if (user.dataValues.expiresAt < currentTime)
-      return res.json({ status: "Failed", message: "OTP is Expired" });
 
     if (user) {
       const [updatedRows] = await Verification.update(
         { isUsed: true },
         { where: { email: email } }
       );
-
-      // Creating new User in user table after successful verification
-      // User.create({
-      //   id: user.dataValues.id,
-      //   username: emailToUsername(email),
-      //   email,
-      // });
 
       // await RefreshTokens.create({
       //   token: refreshToken,
@@ -167,30 +213,50 @@ export async function login(data, res) {
     }
   } catch (err) {
     console.log(err);
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+      error: err,
+    });
   }
 }
 
-export async function resendOtp(req, res) {
+// sendOtp function sends an otp and also acts like a resend otp, if user present in user's table it returns it else it returns null
+export async function sendOtp(req, res) {
   const { email } = req.body;
-  const user = await Verification.findOne({ where: { email } });
-  if (user.dataValues.isUsed === true) {
-    return res.json({ status: "failed", message: "User is already verified" });
-  }
   const otp = generateOtp();
   await otpService.sendOtp(email, otp);
   const currentTime = new Date();
   const expiryTime = new Date(
     currentTime.getTime() + otpExpirtyDuration * 60000
   ); // Set expiry time in minutes
-  const updatedRows = await Verification.update(
-    { otp, expiresAt: expiryTime },
-    {
-      where: {
+
+  const user = await Verification.findOne({ where: { email } });
+  if (user) {
+    await Verification.update(
+      { otp, expiresAt: expiryTime },
+      {
+        where: {
+          email,
+        },
+      }
+    );
+  } else {
+    try {
+      await Verification.create({
         email,
-      },
+        otp,
+        expiresAt: expiryTime,
+      });
+    } catch (error) {
+      console.error(error.message); // Logging the error
+      // throw new Error("Failed to create user and store verification data");
+      // Throw the error so it can be handled by the caller
+      return "error";
     }
-  );
-  return updatedRows;
+  }
+  const userInfo = await User.findOne({ where: { email } });
+  return userInfo;
 }
 
 export async function updateUserInfo(req) {
