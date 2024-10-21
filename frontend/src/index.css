@@ -71,3 +71,14 @@ html {
   font-family: "Roboto", sans-serif;
   color: #262626;
 }
+
+/* Ensure Toastify container is always on top */
+.Toastify__toast-container {
+  z-index: 99999 !important; /* High z-index to stay above other elements */
+}
+
+/* Ensure each toast is visible */
+.Toastify__toast {
+  display: block !important; /* Make sure the toast is displayed */
+  opacity: 1 !important; /* Ensure opacity is set to visible */
+}

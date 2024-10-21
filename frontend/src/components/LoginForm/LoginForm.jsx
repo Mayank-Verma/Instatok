@@ -67,6 +67,8 @@ const LoginForm = ({ notify }) => {
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
           alert("Signup successful! Token saved in browser.");
+          notify();
+
           navigate("/home"); // Navigate to home page
         } else {
           alert("Signup failed. Please try again.");
@@ -88,6 +90,7 @@ const LoginForm = ({ notify }) => {
         // Check if login was successful
         if (response.ok) {
           const result = await response.json();
+          console.log("hitting toast");
           // Store the access and refresh tokens in localStorage
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
