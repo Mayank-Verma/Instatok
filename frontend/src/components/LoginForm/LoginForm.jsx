@@ -6,8 +6,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import "react-toastify/dist/ReactToastify.css";
 
-const LoginForm = () => {
+const LoginForm = ({ notify }) => {
   const [isEmailSubmitted, SetIsEmailSubmitted] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false);
   const [username, setUsername] = useState(null);
@@ -90,7 +91,8 @@ const LoginForm = () => {
           // Store the access and refresh tokens in localStorage
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
-          alert("Login successful! Token saved in browser.");
+          // alert("Login successful! Token saved in browser.");
+          notify();
           navigate("/home"); // Navigate to home page
         } else {
           alert("Login failed. Please try again.");
@@ -245,19 +247,6 @@ const LoginForm = () => {
           />
         </div>
       )}
-      {/* <span
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.4rem",
-          color: "white",
-        }}
-      >
-        <span>Don't have an account?</span>
-        <Link to="/signup" style={{ color: "#467fe1" }}>
-          Sign up
-        </Link>
-      </span> */}
     </div>
   );
 };

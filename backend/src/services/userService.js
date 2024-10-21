@@ -31,11 +31,13 @@ export async function signup(req, res) {
 
     // check for Wrong OTP
     if (user.dataValues.otp != otp)
-      return res.json({ status: "Failed", message: "Wrong OTP" });
+      return res.status(400).json({ status: "Failed", message: "Wrong OTP" });
     //Check for Expired OTP:
     let currentTime = new Date();
     if (user.dataValues.expiresAt < currentTime)
-      return res.json({ status: "Failed", message: "OTP is Expired" });
+      return res
+        .status(400)
+        .json({ status: "Failed", message: "OTP is Expired" });
 
     // Updating isUsed column in verification table
     await Verification.update({ isUsed: true }, { where: { email: email } });
@@ -48,6 +50,13 @@ export async function signup(req, res) {
       firstName,
       lastName,
     });
+
+    if (user) {
+      const [updatedRows] = await Verification.update(
+        { isUsed: true },
+        { where: { email: email } }
+      );
+    }
 
     // Generating access token and refresh token
     const accessToken = generateAccessToken(user.dataValues);
@@ -156,11 +165,13 @@ export async function login(req, res) {
 
     // check for Wrong OTP
     if (user.dataValues.otp != otp)
-      return res.json({ status: "Failed", message: "Wrong OTP" });
+      return res.status(400).json({ status: "Failed", message: "Wrong OTP" });
     //Check for Expired OTP:
     let currentTime = new Date();
     if (user.dataValues.expiresAt < currentTime)
-      return res.json({ status: "Failed", message: "OTP is Expired" });
+      return res
+        .status(400)
+        .json({ status: "Failed", message: "OTP is Expired" });
 
     // Generating access token and refresh token
     const accessToken = generateAccessToken(user.dataValues);
@@ -178,7 +189,7 @@ export async function login(req, res) {
           },
         }
       );
-      return res.json({
+      return res.status(200).json({
         status: "Success",
         message: "Successful Login!",
         accessToken,
