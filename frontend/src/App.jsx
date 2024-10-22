@@ -12,6 +12,19 @@ import Signup from "./pages/Signup/Signup.jsx";
 import Login from "./pages/Login/Login.jsx";
 
 function App() {
+  const notify = () => {
+    console.log("Toast is triggered");
+    toast.success("🦄 Wow, it works!", {
+      position: "top-right",
+      autoClose: 3000, // 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <Router>
       <Provider store={store}>

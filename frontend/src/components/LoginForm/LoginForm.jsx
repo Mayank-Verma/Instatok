@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = ({ notify }) => {
   const [isEmailSubmitted, SetIsEmailSubmitted] = useState(false);
