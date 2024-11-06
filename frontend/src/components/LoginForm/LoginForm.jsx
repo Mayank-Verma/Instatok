@@ -94,7 +94,7 @@ const LoginForm = ({ notify }) => {
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
           // alert("Login successful! Token saved in browser.");
-          notify();
+          // notify();
           navigate("/home"); // Navigate to home page
         } else {
           alert("Login failed. Please try again.");
