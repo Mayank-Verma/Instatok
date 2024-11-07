@@ -42,17 +42,16 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-// General API call method
-const apiCall = async (method, url, data = null) => {
-  const token = localStorage.getItem("accessToken"); // Get token from local storage
-  const headers = { Authorization: `Bearer ${token}` };
+// Axios interceptor to inject access token in header before request is sent to the server
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-  return apiClient({
-    method,
-    url,
-    data,
-    headers,
-  });
-};
-
-export { apiCall };
+export default axiosInstance;
