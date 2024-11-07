@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import "./LoginForm.css";
 import logo from "../../assets/Instatok dark theme.png";
 import { Link } from "react-router-dom";
+import { sendOtp, signup, login } from "../../api/userService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
@@ -28,80 +29,56 @@ const LoginForm = ({ notify }) => {
     if (!otp) {
       try {
         // Send POST request to /sendOtp API for sending the OTP
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/sendOtp`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
-        );
-        // if response is ok, set email is submitted as true
-        if (response.ok) SetIsEmailSubmitted(() => true);
-        const responseData = await response.json();
+        const responseData = await sendOtp(email);
+        console.log("axios response", responseData);
+        // currently calling below method without response.ok check, if needed will add later
+        SetIsEmailSubmitted(() => true);
+
         userData = responseData.data;
         if (userData) setUsername(() => userData.firstName);
         console.log(userData);
         if (!userData) setIsNewUser(() => true);
       } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again later.");
+        console.error("Error sending otp:", error);
+        alert("Error sending otp");
       }
     } else if (otp && firstName && lastName) {
       try {
         // Send POST request to /Signup API for sending the OTP
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        const responseData = await signup(email, otp, firstName, lastName);
+        console.log(responseData);
         // Check if signup was successful
-        if (response.ok) {
-          const result = await response.json();
+        if (responseData) {
           // Store the access and refresh tokens in localStorage
-          localStorage.setItem("accessToken", result.accessToken);
-          localStorage.setItem("refreshToken", result.refreshToken);
+          localStorage.setItem("accessToken", responseData.accessToken);
+          localStorage.setItem("refreshToken", responseData.refreshToken);
           alert("Signup successful! Token saved in browser.");
-          notify();
-
+          // notify(); // This is not working currently
           navigate("/home"); // Navigate to home page
         } else {
           alert("Signup failed. Please try again.");
         }
       } catch (error) {
         console.error("Error:", error);
-        alert("An error occurred. Please try again later.");
+        alert("Error in Signup!.");
       }
     } else {
       try {
-        // Send POST request to /Signup API for sending the OTP
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        const responseData = await login(email, otp);
         // Check if login was successful
-        if (response.ok) {
-          const result = await response.json();
-          console.log("hitting toast");
+        if (responseData) {
           // Store the access and refresh tokens in localStorage
-          localStorage.setItem("accessToken", result.accessToken);
-          localStorage.setItem("refreshToken", result.refreshToken);
-          // alert("Login successful! Token saved in browser.");
+          localStorage.setItem("accessToken", responseData.accessToken);
+          localStorage.setItem("refreshToken", responseData.refreshToken);
+          alert("Login successful! Token saved in browser.");
           // notify();
           navigate("/home"); // Navigate to home page
         } else {
-          alert("Login failed. Please try again.");
+          alert("Login failed.");
         }
       } catch (error) {
         console.error("Error:", error);
-        alert("An error occurred. Please try again later.");
+        alert("An error occurred during Login");
       }
     }
   };

@@ -29,7 +29,7 @@ const Navbar = () => {
   const dispatch = useDispatch(); // Get the dispatch function
   return (
     <div className="navbar">
-      <Link to="#home" onClick={() => dispatch(home())}>
+      <Link to="/home" onClick={() => dispatch(home())}>
         <div
           className="navbarOptions"
           style={{ width: "8rem", marginRight: "4rem" }}
@@ -37,49 +37,49 @@ const Navbar = () => {
           <img src={instatokLogoLight}></img>
         </div>
       </Link>
-      <Link to="#home" onClick={() => dispatch(home())}>
+      <Link to="/home" onClick={() => dispatch(home())}>
         <div className="navbarOptions">
           <img src={homeUnselected}></img>
           <span>Home</span>
         </div>
       </Link>
-      <Link to="#search" onClick={() => dispatch(search())}>
+      <Link to="/search" onClick={() => dispatch(search())}>
         <div className="navbarOptions">
           <img src={searchUnselected}></img>
           <span>Search</span>
         </div>
       </Link>
-      <Link to="#discover" onClick={() => dispatch(discover())}>
+      <Link to="/discover" onClick={() => dispatch(discover())}>
         <div className="navbarOptions">
           <img src={discoverUnselected}></img>
           <span>Discover</span>
         </div>
       </Link>
-      <Link to="#reels" onClick={() => dispatch(reels())}>
+      <Link to="/reels" onClick={() => dispatch(reels())}>
         <div className="navbarOptions">
           <img src={reelsUnselected}></img>
           <span>Reels</span>
         </div>
       </Link>
-      <Link to="#messages" onClick={() => dispatch(messages())}>
+      <Link to="/messages" onClick={() => dispatch(messages())}>
         <div className="navbarOptions">
           <img src={messagesUnselected}></img>
           <span>Messages</span>
         </div>
       </Link>
-      <Link to="#notifications" onClick={() => dispatch(notifications())}>
+      <Link to="/notifications" onClick={() => dispatch(notifications())}>
         <div className="navbarOptions">
           <img src={notificationUnselected}></img>
           <span>Notifications</span>
         </div>
       </Link>
-      <Link to="#create" onClick={() => dispatch(create())}>
+      <Link to="/create" onClick={() => dispatch(create())}>
         <div className="navbarOptions">
           <img src={createUnselected}></img>
           <span>Create</span>
         </div>
       </Link>
-      <Link to="#profile" onClick={() => dispatch(profile())}>
+      <Link to="/profile" onClick={() => dispatch(profile())}>
         <div className="navbarOptions">
           <Avatar style={{ width: "24px", height: "24px" }}>
             <AvatarImage src="https://github.com/shadcn.png" />
@@ -88,7 +88,7 @@ const Navbar = () => {
           <span>Profile</span>
         </div>
       </Link>
-      <Link to="#more" onClick={() => dispatch(more())}>
+      <Link to="/more" onClick={() => dispatch(more())}>
         <div className="navbarOptions">
           <img src={hamburger}></img>
           <span>More</span>
