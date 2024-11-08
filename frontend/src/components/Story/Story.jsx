@@ -1,5 +1,5 @@
 import unwatchedStoryRing from "../../assets/unwatchedStoryRing.svg";
-export default function Story() {
+export default function Story({ storyId }) {
   return (
     <div
       style={{
@@ -13,7 +13,7 @@ export default function Story() {
         <img src={unwatchedStoryRing} width="90rem"></img>
         <img
           // src="https://avatar.iran.liara.run/public"
-          src="https://i.pravatar.cc/300"
+          src={`https://i.pravatar.cc/300?img=${storyId}`}
           width="80rem"
           style={{
             position: "absolute",

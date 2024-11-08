@@ -22,7 +22,7 @@ export default function StoriesComponent() {
       <div className="embla__container">
         {stories.map((story, index) => (
           <div className="embla__slide" key={index}>
-            <Story key={index} />
+            <Story key={index} storyId={index} />
           </div>
         ))}
       </div>

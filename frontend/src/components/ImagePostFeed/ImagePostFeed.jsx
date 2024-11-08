@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-
 import ImagePost from "../ImagePost/ImagePost";
+import { fetchImagePosts } from "@/api/postService";
 
 export default function ImagePostFeed() {
   const [data, setData] = useState(null);
@@ -19,21 +19,8 @@ export default function ImagePostFeed() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/fetchPosts/images`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // Set the Authorization header
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-        setData(result);
+        const response = await fetchImagePosts();
+        const posts = response.posts;
       } catch (error) {
         setError(error);
       } finally {
