@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import "./StoriesComponent.css";
 import Story from "../Story/Story";
 
+let stories = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; // to simulate stores
+
 export default function StoriesComponent() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
@@ -18,42 +20,11 @@ export default function StoriesComponent() {
   return (
     <div className="embla" ref={emblaRef}>
       <div className="embla__container">
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
-        <div className="embla__slide">
-          <Story />
-        </div>
+        {stories.map((story, index) => (
+          <div className="embla__slide" key={index}>
+            <Story key={index} />
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -12,9 +12,15 @@ export default function Story() {
       <div>
         <img src={unwatchedStoryRing} width="90rem"></img>
         <img
-          src="https://avatar.iran.liara.run/public"
+          // src="https://avatar.iran.liara.run/public"
+          src="https://i.pravatar.cc/300"
           width="80rem"
-          style={{ position: "absolute", top: "0.35rem", left: "1.25rem" }}
+          style={{
+            position: "absolute",
+            top: "0.35rem",
+            left: "1.25rem",
+            borderRadius: "50%",
+          }}
         ></img>
       </div>
       <div
