@@ -1,5 +1,7 @@
 import FollowSuggestions from "@/components/FollowSuggestions/FollowSuggestions";
 import SwitchProfile from "@/components/SwitchProfile/SwitchProfile";
+
+let followersList = [1, 2, 3, 4, 5];
 function FollowSuggestionsLayout() {
   return (
     <div>
@@ -19,11 +21,9 @@ function FollowSuggestionsLayout() {
         <div style={{ color: "#8E8E8E" }}>Suggested for you</div>
         <a href="#">See All</a>
       </div>
-      <FollowSuggestions />
-      <FollowSuggestions />
-      <FollowSuggestions />
-      <FollowSuggestions />
-      <FollowSuggestions />
+      {followersList.map((follower, index) => (
+        <FollowSuggestions key={index} followerId={follower} />
+      ))}
     </div>
   );
 }
