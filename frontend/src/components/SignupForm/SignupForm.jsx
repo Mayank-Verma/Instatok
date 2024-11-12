@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import "./SignupForm.css";
+import "./SignupForm.module.css";
 import logo from "../../assets/Instatok dark theme.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

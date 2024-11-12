@@ -1,4 +1,4 @@
-.main-container {
+.mainContainer {
   font-size: 1rem;
   /* border: 1px solid #262626;  */
   display: flex;
@@ -34,7 +34,7 @@ form {
   justify-content: space-around;
 }
 
-.input-container {
+.inputContainer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -58,7 +58,7 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.input-field {
+.inputField {
   width: 16rem;
 }
 
@@ -85,6 +85,6 @@ input[type="number"]::-webkit-inner-spin-button {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
-.google-login {
+.googleLogin {
   width: 17rem;
 }

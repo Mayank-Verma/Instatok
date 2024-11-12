@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import "./LoginForm.css";
+import styles from "./LoginForm.module.css";
 import logo from "../../assets/Instatok dark theme.png";
 import { Link } from "react-router-dom";
 import { sendOtp, signup, login } from "../../api/userService";
@@ -100,17 +100,17 @@ const LoginForm = ({ notify }) => {
   };
 
   return (
-    <div className="main-container">
-      <img src={logo} className="logo" />
+    <div className={styles.mainContainer}>
+      <img src={logo} className={styles.logo} />
       <div style={{ color: "#F9F6EE", fontWeight: "bolder" }}>
         {username
           ? `Welcome back ${username}!`
           : "Step into the realm of Digitalverse"}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="input-container">
+        <div className={styles.inputContainer}>
           <div>
-            <div className="input">
+            <div className={styles.input}>
               {/* <label htmlFor="email">Email</label> */}
               <input
                 id="email"
@@ -119,18 +119,18 @@ const LoginForm = ({ notify }) => {
                 autoComplete="off"
                 {...register("email", { required: "*Email is required" })}
                 style={{ paddingLeft: "0.2rem" }}
-                className="input-field"
+                className={styles.inputField}
               />
             </div>
 
             {errors.email && (
-              <div className="error">{errors.email.message}</div>
+              <div className={styles.error}>{errors.email.message}</div>
             )}
           </div>
 
           {isEmailSubmitted && (
             <div>
-              <div className="input">
+              <div className={styles.input}>
                 {/* <label htmlFor="email">OTP</label> */}
                 <input
                   id="otp"
@@ -139,19 +139,21 @@ const LoginForm = ({ notify }) => {
                   autoComplete="off"
                   {...register("otp", { required: "*OTP is required" })}
                   style={{ paddingLeft: "0.2rem" }}
-                  className="input-field"
+                  className={styles.inputField}
                   min="0000"
                   max="9999"
                 />
               </div>
 
-              {errors.otp && <div className="error">{errors.otp.message}</div>}
+              {errors.otp && (
+                <div className={styles.error}>{errors.otp.message}</div>
+              )}
             </div>
           )}
 
           {isNewUser && (
             <div>
-              <div className="input">
+              <div className={styles.input}>
                 {/* <label htmlFor="firstName">First name</label> */}
                 <input
                   id="name"
@@ -162,17 +164,17 @@ const LoginForm = ({ notify }) => {
                     required: "*First Name is required",
                   })}
                   style={{ paddingLeft: "0.2rem" }}
-                  className="input-field"
+                  className={styles.inputField}
                 />
               </div>
               {errors.firstName && (
-                <div className="error">{errors.firstName.message}</div>
+                <div className={styles.error}>{errors.firstName.message}</div>
               )}
             </div>
           )}
           {isNewUser && (
             <div>
-              <div className="input">
+              <div className={styles.input}>
                 {/* <label htmlFor="lastName">Last name</label> */}
                 <input
                   id="lastName"
@@ -183,17 +185,17 @@ const LoginForm = ({ notify }) => {
                     required: "*Last Name is required",
                   })}
                   style={{ paddingLeft: "0.2rem" }}
-                  className="input-field"
+                  className={styles.inputField}
                 />
               </div>
               {errors.lastName && (
-                <div className="error">{errors.lastName.message}</div>
+                <div className={styles.error}>{errors.lastName.message}</div>
               )}
             </div>
           )}
         </div>
         <div>
-          <button type="submit" className="signup">
+          <button type="submit" className={styles.signup}>
             {!isEmailSubmitted
               ? "Login"
               : username && isEmailSubmitted
@@ -211,16 +213,16 @@ const LoginForm = ({ notify }) => {
             color: "white",
           }}
         >
-          <span className="line"></span>
+          <span className={styles.line}></span>
           <span>OR</span>
-          <span className="line"></span>
+          <span className={styles.line}></span>
         </span>
       )}
       {!isEmailSubmitted && (
         <div style={{ width: "17rem", height: "0.8rem" }}>
           <GoogleLogin
             theme="filled"
-            className="google-login"
+            className={styles.googleLogin}
             onSuccess={handleGoogleLoginSuccess}
             onError={handleGoogleLoginFailure}
           />
