@@ -11,10 +11,10 @@ export const fetchImagePosts = async () => {
 };
 
 // API wrapper for uploading image posts
-export const uploadImagePost = async ({ path, description = " " }) => {
+export const uploadImagePost = async ({ image, description = " " }) => {
   try {
     const formData = new FormData();
-    formData.append("image", path); // Add the file
+    formData.append("image", image); // Add the file
     formData.append("description", description); // Add any other data you want to send
     const response = await axiosInstance.post("/post-upload/image", formData, {
       headers: {

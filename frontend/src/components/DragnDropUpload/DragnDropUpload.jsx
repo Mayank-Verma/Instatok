@@ -7,12 +7,8 @@ import UploadPostDesignWithDescription from "../UploadPostDesignWithDescription/
 export function DragnDropUpload() {
   const [receivedFile, setReceivedFile] = useState(null);
   const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles[0]);
     setReceivedFile(() => acceptedFiles[0]);
-
     // uploadImagePost({ path: acceptedFiles[0] });
-
-    // Do something with the files
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

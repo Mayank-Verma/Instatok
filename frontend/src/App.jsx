@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Signup from "./pages/Signup/Signup.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Create from "./pages/Create/Create";
+import Spinner from "./components/Spinner/Spinner";
 
 function App() {
   const notify = () => {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/notifications" element={<Home />} />
           <Route path="/create" element={<Create />} />
           <Route path="/more" element={<Home />} />
+          <Route path="/test" element={<Spinner />} />
         </Routes>
       </Provider>
     </Router>

@@ -7,9 +7,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import ReactLoading from "react-loading";
+import Spinner from "../Spinner/Spinner";
 
 const LoginForm = ({ notify }) => {
   const [isEmailSubmitted, SetIsEmailSubmitted] = useState(false);
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false);
   const [username, setUsername] = useState(null);
   let userData = "";
@@ -23,6 +26,7 @@ const LoginForm = ({ notify }) => {
 
   // Handle form submission (Email Signup)
   const onSubmit = async (data) => {
+    setIsFormSubmitting(true);
     const { email, otp, firstName, lastName } = data;
     console.log("Form Data: ", email, otp);
 
@@ -33,6 +37,7 @@ const LoginForm = ({ notify }) => {
         console.log("axios response", responseData);
         // currently calling below method without response.ok check, if needed will add later
         SetIsEmailSubmitted(() => true);
+        setIsFormSubmitting(false); // as response has reached hence making it false
 
         userData = responseData.data;
         if (userData) setUsername(() => userData.firstName);
@@ -47,6 +52,8 @@ const LoginForm = ({ notify }) => {
         // Send POST request to /Signup API for sending the OTP
         const responseData = await signup(email, otp, firstName, lastName);
         console.log(responseData);
+        setIsFormSubmitting(false); // as response has reached hence making it false
+
         // Check if signup was successful
         if (responseData) {
           // Store the access and refresh tokens in localStorage
@@ -65,6 +72,8 @@ const LoginForm = ({ notify }) => {
     } else {
       try {
         const responseData = await login(email, otp);
+        setIsFormSubmitting(false); // as response has reached hence making it false
+
         // Check if login was successful
         if (responseData) {
           // Store the access and refresh tokens in localStorage
@@ -195,12 +204,28 @@ const LoginForm = ({ notify }) => {
           )}
         </div>
         <div>
-          <button type="submit" className={styles.signup}>
-            {!isEmailSubmitted
-              ? "Login"
-              : username && isEmailSubmitted
-              ? "Login"
-              : "Signup"}
+          <button
+            type="submit"
+            className={styles.signup}
+            disabled={isFormSubmitting}
+          >
+            {!isEmailSubmitted ? (
+              isFormSubmitting ? (
+                <Spinner />
+              ) : (
+                "Login"
+              )
+            ) : username && isEmailSubmitted ? (
+              isFormSubmitting ? (
+                <Spinner />
+              ) : (
+                "Login"
+              )
+            ) : isFormSubmitting ? (
+              <Spinner />
+            ) : (
+              "Signup"
+            )}
           </button>
         </div>
       </form>
