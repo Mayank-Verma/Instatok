@@ -39,8 +39,8 @@ const StyledWrapper = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     border: solid 2px var(--color);
     border-radius: 50%;
     margin: 0 10px;
@@ -51,8 +51,8 @@ const StyledWrapper = styled.div`
   .loader .circle .dot {
     position: absolute;
     transform: translate(-50%, -50%);
-    width: 16px;
-    height: 16px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background-color: var(--color);
     animation: dot-keys var(--animation);
@@ -61,8 +61,8 @@ const StyledWrapper = styled.div`
   .loader .circle .outline {
     position: absolute;
     transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     animation: outline-keys var(--animation);
   }
@@ -153,7 +153,7 @@ const StyledWrapper = styled.div`
   @keyframes outline-keys {
     0% {
       transform: scale(0);
-      outline: solid 20px var(--color);
+      outline: solid 10px var(--color);
       outline-offset: 0;
       opacity: 1;
     }
@@ -161,7 +161,7 @@ const StyledWrapper = styled.div`
     100% {
       transform: scale(1);
       outline: solid 0 transparent;
-      outline-offset: 20px;
+      outline-offset: 10px;
       opacity: 0;
     }
   }
