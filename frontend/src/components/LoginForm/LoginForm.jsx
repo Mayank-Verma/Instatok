@@ -206,7 +206,7 @@ const LoginForm = ({ notify }) => {
         <div>
           <button
             type="submit"
-            className={styles.signup}
+            className={`${styles.signup} ${styles.btn}`}
             disabled={isFormSubmitting}
           >
             {!isEmailSubmitted ? (

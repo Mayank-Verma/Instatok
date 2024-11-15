@@ -1,4 +1,5 @@
-export default function SignupLoginVideo({ videoURL }) {
+export default function SignupLoginVideo({ videoURL, onVideoLoaded }) {
+  console.log("reached signupLoginvideo");
   return (
     <div className="h-screen">
       <video
@@ -11,6 +12,7 @@ export default function SignupLoginVideo({ videoURL }) {
         loop // Optional: To loop the video
         muted // Mute the video (necessary for autoplay in most browsers)
         // controls // Optional: Show controls for play, pause, etc.
+        onLoadedData={onVideoLoaded} // call the handler when video loads
       >
         Your browser does not support the video tag.
       </video>

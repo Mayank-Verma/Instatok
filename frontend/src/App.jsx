@@ -6,12 +6,15 @@ import store from "../src/store/store"; // Import the store
 import Story from "./components/Story/Story";
 import StoriesComponent from "./components/StoriesComponent/StoriesComponent";
 import FollowSuggestions from "./components/FollowSuggestions/FollowSuggestions";
+import Reels from "./pages/Reels/Reels";
 import ImagePost from "./components/ImagePost/ImagePost";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Signup from "./pages/Signup/Signup.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Create from "./pages/Create/Create";
 import Spinner from "./components/Spinner/Spinner";
+import Loader from "./components/SplashLoader/SplashLoader";
+import Test from "./pages/Test/Test";
 
 function App() {
   const notify = () => {
@@ -36,12 +39,13 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<Home />} />
           <Route path="/discover" element={<Home />} />
-          <Route path="/reels" element={<Home />} />
+          <Route path="/reels" element={<Reels />} />
           <Route path="/messages" element={<Home />} />
           <Route path="/notifications" element={<Home />} />
           <Route path="/create" element={<Create />} />
+          <Route path="/profile" element={<Home />} />
           <Route path="/more" element={<Home />} />
-          <Route path="/test" element={<Spinner />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </Provider>
     </Router>

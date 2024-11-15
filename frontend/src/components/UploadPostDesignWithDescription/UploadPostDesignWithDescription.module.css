@@ -13,15 +13,18 @@
 
 .btn {
   background-color: #0095f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
   width: 485px;
-  padding: 0.2rem 0.6rem;
   border-radius: 0.5rem;
+  height: 40px;
 }
 
-.btn:hover {
+/* .btn:hover {
   cursor: pointer;
-}
+} */
 
 .descriptionInput {
   width: 485px;

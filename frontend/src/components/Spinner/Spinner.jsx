@@ -1,168 +1,145 @@
+import React from "react";
 import styled from "styled-components";
 
 const Spinner = () => {
   return (
-    <StyledWrapper>
-      <div className="loader">
-        <div className="circle">
-          <div className="dot" />
-          <div className="outline" />
-        </div>
-        <div className="circle">
-          <div className="dot" />
-          <div className="outline" />
-        </div>
-        <div className="circle">
-          <div className="dot" />
-          <div className="outline" />
-        </div>
-        <div className="circle">
-          <div className="dot" />
-          <div className="outline" />
-        </div>
-      </div>
+    <StyledWrapper style={{ width: "30px" }}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 48 48"
+        className="loader"
+      >
+        <g
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          fillRule="evenodd"
+          fill="none"
+          strokeWidth={1}
+          stroke="none"
+        >
+          <line y2={6} x2={24} y1={2} x1={24} />
+          <line
+            transform="translate(34, 6.679) rotate(30) translate(-34, -6.679)"
+            y2="8.679"
+            x2={34}
+            y1="4.679"
+            x1={34}
+          />
+          <line
+            transform="translate(41.321, 14) rotate(60) translate(-41.321, -14)"
+            y2={16}
+            x2="41.321"
+            y1={12}
+            x1="41.321"
+          />
+          <line
+            transform="translate(44, 24) rotate(90) translate(-44, -24)"
+            y2={26}
+            x2={44}
+            y1={22}
+            x1={44}
+          />
+          <line
+            transform="translate(41.321, 34) rotate(120) translate(-41.321, -34)"
+            y2={36}
+            x2="41.321"
+            y1={32}
+            x1="41.321"
+          />
+          <line
+            transform="translate(34, 41.321) rotate(150) translate(-34, -41.321)"
+            y2="43.321"
+            x2={34}
+            y1="39.321"
+            x1={34}
+          />
+          <line
+            transform="translate(24, 44) rotate(180) translate(-24, -44)"
+            y2={46}
+            x2={24}
+            y1={42}
+            x1={24}
+          />
+          <line
+            transform="translate(14, 41.321) rotate(210) translate(-14, -41.321)"
+            y2="43.321"
+            x2={14}
+            y1="39.321"
+            x1={14}
+          />
+          <line
+            transform="translate(6.679, 34) rotate(240) translate(-6.679, -34)"
+            y2={36}
+            x2="6.679"
+            y1={32}
+            x1="6.679"
+          />
+          <line
+            transform="translate(4, 24) rotate(270) translate(-4, -24)"
+            y2={26}
+            x2={4}
+            y1={22}
+            x1={4}
+          />
+          <line
+            transform="translate(6.679, 14) rotate(300) translate(-6.679, -14)"
+            y2={16}
+            x2="6.679"
+            y1={12}
+            x1="6.679"
+          />
+          <line
+            transform="translate(14, 6.679) rotate(330) translate(-14, -6.679)"
+            y2="8.679"
+            x2={14}
+            y1="4.679"
+            x1={14}
+          />
+        </g>
+      </svg>
     </StyledWrapper>
   );
 };
 
 const StyledWrapper = styled.div`
   .loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    --color: hsl(0, 0%, 87%);
-    --animation: 2s ease-in-out infinite;
+    width: 30px;
+    height: 30px;
+    transform: rotate(0deg);
+    animation: spin 2.4s linear infinite;
   }
 
-  .loader .circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 10px;
-    height: 10px;
-    border: solid 2px var(--color);
-    border-radius: 50%;
-    margin: 0 10px;
-    background-color: transparent;
-    animation: circle-keys var(--animation);
+  .loader line {
+    stroke: #ffffff; /* White color for better visibility */
+    stroke-width: 4;
+    stroke-linecap: round;
+    opacity: 0.8;
+    stroke-dasharray: 10;
+    stroke-dashoffset: 10;
+    animation: dash 2.4s ease-in-out infinite;
   }
 
-  .loader .circle .dot {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: var(--color);
-    animation: dot-keys var(--animation);
-  }
-
-  .loader .circle .outline {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    animation: outline-keys var(--animation);
-  }
-
-  .circle:nth-child(2) {
-    animation-delay: 0.3s;
-  }
-
-  .circle:nth-child(3) {
-    animation-delay: 0.6s;
-  }
-
-  .circle:nth-child(4) {
-    animation-delay: 0.9s;
-  }
-
-  .circle:nth-child(5) {
-    animation-delay: 1.2s;
-  }
-
-  .circle:nth-child(2) .dot {
-    animation-delay: 0.3s;
-  }
-
-  .circle:nth-child(3) .dot {
-    animation-delay: 0.6s;
-  }
-
-  .circle:nth-child(4) .dot {
-    animation-delay: 0.9s;
-  }
-
-  .circle:nth-child(5) .dot {
-    animation-delay: 1.2s;
-  }
-
-  .circle:nth-child(1) .outline {
-    animation-delay: 0.9s;
-  }
-
-  .circle:nth-child(2) .outline {
-    animation-delay: 1.2s;
-  }
-
-  .circle:nth-child(3) .outline {
-    animation-delay: 1.5s;
-  }
-
-  .circle:nth-child(4) .outline {
-    animation-delay: 1.8s;
-  }
-
-  .circle:nth-child(5) .outline {
-    animation-delay: 2.1s;
-  }
-
-  @keyframes circle-keys {
+  @keyframes dash {
     0% {
-      transform: scale(1);
-      opacity: 1;
+      stroke-dashoffset: 10;
+      opacity: 0.8;
     }
-
     50% {
-      transform: scale(1.5);
-      opacity: 0.5;
+      stroke-dashoffset: 0;
+      opacity: 0.4;
     }
-
     100% {
-      transform: scale(1);
-      opacity: 1;
+      stroke-dashoffset: 10;
+      opacity: 0.8;
     }
   }
 
-  @keyframes dot-keys {
+  @keyframes spin {
     0% {
-      transform: scale(1);
+      transform: rotate(0deg);
     }
-
-    50% {
-      transform: scale(0);
-    }
-
     100% {
-      transform: scale(1);
-    }
-  }
-
-  @keyframes outline-keys {
-    0% {
-      transform: scale(0);
-      outline: solid 10px var(--color);
-      outline-offset: 0;
-      opacity: 1;
-    }
-
-    100% {
-      transform: scale(1);
-      outline: solid 0 transparent;
-      outline-offset: 10px;
-      opacity: 0;
+      transform: rotate(360deg);
     }
   }
 `;
