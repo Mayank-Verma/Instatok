@@ -1,5 +1,5 @@
 import { useState } from "react";
-import VideoComponent from "../VideoComponent";
+import Reel from "../Reel/Reel";
 
 const videos = [
   "https://yqadtatwibdusbqznmau.supabase.co/storage/v1/object/public/videos/85a85731-3e2b-42a0-899b-ed94492756eb-166fbc2f-5135-4b3e-9c36-20601a28d436?t=2024-09-25T04%3A51%3A02.961Z",
@@ -19,28 +19,16 @@ export default function ReelsComponent() {
         <button onClick={handleEnableAutoplay} style={{ color: "black" }}>
           Reels
         </button>
-        <VideoComponent
-          videoURL={videos[0]}
-          isAutoplayEnabled={isAutoplayEnabled}
-        />
+        <Reel videoURL={videos[0]} isAutoplayEnabled={isAutoplayEnabled} />
       </section>
       <section>
-        <VideoComponent
-          videoURL={videos[1]}
-          isAutoplayEnabled={isAutoplayEnabled}
-        />
+        <Reel videoURL={videos[1]} isAutoplayEnabled={isAutoplayEnabled} />
       </section>
       <section>
-        <VideoComponent
-          videoURL={videos[2]}
-          isAutoplayEnabled={isAutoplayEnabled}
-        />
+        <Reel videoURL={videos[2]} isAutoplayEnabled={isAutoplayEnabled} />
       </section>
       <section>
-        <VideoComponent
-          videoURL={videos[3]}
-          isAutoplayEnabled={isAutoplayEnabled}
-        />
+        <Reel videoURL={videos[3]} isAutoplayEnabled={isAutoplayEnabled} />
       </section>
     </div>
   );
