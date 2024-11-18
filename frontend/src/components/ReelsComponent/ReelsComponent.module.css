@@ -1,0 +1,10 @@
+.muteUnmute {
+  position: absolute;
+  top: 3rem;
+  left: 10rem;
+}
+
+.reelsContainer {
+  position: relative;
+  width: 30rem;
+}

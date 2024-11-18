@@ -15,6 +15,7 @@ import Create from "./pages/Create/Create";
 import Spinner from "./components/Spinner/Spinner";
 import Loader from "./components/SplashLoader/SplashLoader";
 import Test from "./pages/Test/Test";
+import MuteUnmuteButton from "./components/MuteUnmuteButton/MuteUnmuteButton";
 
 function App() {
   const notify = () => {
@@ -45,7 +46,7 @@ function App() {
           <Route path="/create" element={<Create />} />
           <Route path="/profile" element={<Home />} />
           <Route path="/more" element={<Home />} />
-          <Route path="/test" element={<Test />} />
+          <Route path="/test" element={<MuteUnmuteButton />} />
         </Routes>
       </Provider>
     </Router>

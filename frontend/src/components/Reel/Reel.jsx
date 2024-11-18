@@ -69,21 +69,25 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
           <button className={styles.followButton}>Follow</button>
         </div>
         <div className={styles.description}>
-          This is some random caption I am writing just to get the fun out of it
+          This is some random caption I am writing just to get the fun out of
+          it, this text is just a placeholder and not meant to be read.
         </div>
       </div>
 
-      <video
-        autoPlay
-        ref={videoRef}
-        muted
-        loop
-        controls
-        style={{ height: "100vh", width: "400px" }}
-      >
-        <source src={videoURL} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      <div className="videoContainer">
+        <video
+          className="videoPlayer"
+          autoPlay
+          ref={videoRef}
+          muted
+          loop
+          // controls
+          style={{ height: "100vh", width: "40rem" }}
+        >
+          <source src={videoURL} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
   );
 };

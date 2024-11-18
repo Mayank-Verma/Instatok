@@ -8,8 +8,8 @@
   flex-direction: column;
   position: absolute;
   bottom: 6rem;
-  right: 3rem;
-  background-color: black;
+  right: 6rem;
+  /* background-color: black; */
   height: 15rem;
   justify-content: space-between;
   z-index: 1;
@@ -26,8 +26,13 @@
 .reelInfoSection {
   position: absolute;
   display: flex;
-  bottom: 4rem;
+  flex-direction: column;
+  justify-content: start;
+  gap: 0.4rem;
+  bottom: 1rem;
+  left: 5rem;
   z-index: 1;
+  height: 7rem;
 }
 
 .profilePicture {
@@ -46,4 +51,16 @@
 
 .followButton:hover {
   cursor: pointer;
+}
+
+.videoContainer {
+  overflow: hidden;
+}
+
+.videoPlayer {
+  object-fit: cover;
+}
+
+.description {
+  width: 30rem;
 }
