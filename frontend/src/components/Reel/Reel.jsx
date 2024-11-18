@@ -5,6 +5,7 @@ import reelsComment from "../../assets/reelsComment.svg";
 import reelsShare from "../../assets/reelsShare.svg";
 import reels3dots from "../../assets/reels3dots.svg";
 import styles from "./Reel.module.css";
+import MuteUnmuteButton from "../MuteUnmuteButton/MuteUnmuteButton";
 
 const Reel = ({ videoURL, isAutoplayEnabled }) => {
   let randomuser = Math.round(Math.random() * 50 + 1);
@@ -47,6 +48,9 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
 
   return (
     <div className={styles.mainContainer}>
+      <div className={styles.muteUnmuteButton}>
+        <MuteUnmuteButton />
+      </div>
       <div className={styles.optionsContainer}>
         <div className={styles.optionsInnerContainer}>
           <img src={reelsHeart} alt="reelsHeart" />
@@ -69,8 +73,7 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
           <button className={styles.followButton}>Follow</button>
         </div>
         <div className={styles.description}>
-          This is some random caption I am writing just to get the fun out of
-          it, this text is just a placeholder and not meant to be read.
+          This is some random caption I am writing just to get the fun out of it
         </div>
       </div>
 
@@ -82,7 +85,7 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
           muted
           loop
           // controls
-          style={{ height: "100vh", width: "40rem" }}
+          style={{ height: "100vh", width: "22rem", backgroundColor: "black" }}
         >
           <source src={videoURL} type="video/mp4" />
           Your browser does not support the video tag.
