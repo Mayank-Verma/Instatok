@@ -8,6 +8,7 @@ import styles from "./Reel.module.css";
 import MuteUnmuteButton from "../MuteUnmuteButton/MuteUnmuteButton";
 
 const Reel = ({ videoURL, isAutoplayEnabled }) => {
+  const [isMute, setIsMute] = useState(isAutoplayEnabled);
   let randomuser = Math.round(Math.random() * 50 + 1);
   const videoRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -49,7 +50,7 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.muteUnmuteButton}>
-        <MuteUnmuteButton />
+        <MuteUnmuteButton isMute={isMute} />
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.optionsInnerContainer}>
@@ -85,7 +86,11 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
           muted
           loop
           // controls
-          style={{ height: "100vh", width: "22rem", backgroundColor: "black" }}
+          style={{
+            height: "100vh",
+            maxWidth: "40rem",
+            backgroundColor: "black",
+          }}
         >
           <source src={videoURL} type="video/mp4" />
           Your browser does not support the video tag.

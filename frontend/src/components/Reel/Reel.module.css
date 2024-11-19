@@ -70,6 +70,10 @@
 .muteUnmuteButton {
   position: absolute;
   z-index: 1;
-  top: 2rem;
-  right: -0.8rem;
+  top: 3rem;
+  right: 0.5rem;
+  background-color: red;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
 }

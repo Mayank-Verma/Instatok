@@ -1,6 +1,8 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-const MuteUnmuteButton = ({ muteStatus = false }) => {
+const MuteUnmuteButton = ({ isMute = false }) => {
+  const [muteStatus, setMuteStatus] = useState(isMute);
   console.log();
   return (
     <StyledWrapper>
@@ -30,7 +32,8 @@ const MuteUnmuteButton = ({ muteStatus = false }) => {
 const StyledWrapper = styled.div`
   /*------ Settings ------*/
   .container {
-    --color: #a5a5b0;
+    // --color: #a5a5b0;
+    --color: #fff;
     --size: 24px;
     display: flex;
     justify-content: center;
