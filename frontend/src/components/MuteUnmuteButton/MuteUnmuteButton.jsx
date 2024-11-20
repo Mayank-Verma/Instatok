@@ -1,13 +1,15 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const MuteUnmuteButton = ({ isMute = false }) => {
-  const [muteStatus, setMuteStatus] = useState(isMute);
-  console.log();
+const MuteUnmuteButton = ({ handleEnableAutoplay }) => {
+  function handler() {
+    handleEnableAutoplay();
+    console.log("fired");
+  }
   return (
-    <StyledWrapper>
-      <label className="container">
-        <input type="checkbox" defaultChecked={muteStatus} />
+    <StyledWrapper onClick={handler}>
+      <label className="container" onClick={handler}>
+        <input type="checkbox" defaultChecked={false} />
         <svg
           viewBox="0 0 576 512"
           height="1em"
@@ -33,7 +35,8 @@ const StyledWrapper = styled.div`
   /*------ Settings ------*/
   .container {
     // --color: #a5a5b0;
-    --color: #fff;
+    // --color: #fff;
+    --color: #000;
     --size: 24px;
     display: flex;
     justify-content: center;

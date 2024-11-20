@@ -8,7 +8,6 @@ import styles from "./Reel.module.css";
 import MuteUnmuteButton from "../MuteUnmuteButton/MuteUnmuteButton";
 
 const Reel = ({ videoURL, isAutoplayEnabled }) => {
-  const [isMute, setIsMute] = useState(isAutoplayEnabled);
   let randomuser = Math.round(Math.random() * 50 + 1);
   const videoRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -38,6 +37,9 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
         videoRef.current.muted = false; // Unmute if in view and autoplay is enabled
         videoRef.current.play(); // Play video
         console.log("playing and unmuting current video");
+      } else if (isInView && !isAutoplayEnabled) {
+        videoRef.current.muted = true; // mute if in view and autoplay is disabled
+        videoRef.current.play();
       } else if (isInView) {
         videoRef.current.play(); // Play muted video if in view
       } else {
@@ -50,7 +52,7 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.muteUnmuteButton}>
-        <MuteUnmuteButton isMute={isMute} />
+        <MuteUnmuteButton isAutoplayEnabled={isAutoplayEnabled} />
       </div>
       <div className={styles.optionsContainer}>
         <div className={styles.optionsInnerContainer}>
