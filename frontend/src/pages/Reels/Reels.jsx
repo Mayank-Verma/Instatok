@@ -4,7 +4,7 @@ import ReelsComponent from "@/components/ReelsComponent/ReelsComponent";
 function Reels() {
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <ReelsComponent />
     </>
   );

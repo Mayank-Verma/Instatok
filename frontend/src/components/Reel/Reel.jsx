@@ -36,7 +36,7 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
       if (isInView && isAutoplayEnabled) {
         videoRef.current.muted = false; // Unmute if in view and autoplay is enabled
         videoRef.current.play(); // Play video
-        console.log("playing and unmuting current video");
+        // console.log("playing and unmuting current video");
       } else if (isInView && !isAutoplayEnabled) {
         videoRef.current.muted = true; // mute if in view and autoplay is disabled
         videoRef.current.play();
@@ -44,16 +44,16 @@ const Reel = ({ videoURL, isAutoplayEnabled }) => {
         videoRef.current.play(); // Play muted video if in view
       } else {
         videoRef.current.pause(); // Pause video if out of view
-        console.log("muting and pausing the previous video");
+        // console.log("muting and pausing the previous video");
       }
     }
   }, [isInView, isAutoplayEnabled]);
 
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.muteUnmuteButton}>
+      {/* <div className={styles.muteUnmuteButton}>
         <MuteUnmuteButton isAutoplayEnabled={isAutoplayEnabled} />
-      </div>
+      </div> */}
       <div className={styles.optionsContainer}>
         <div className={styles.optionsInnerContainer}>
           <img src={reelsHeart} alt="reelsHeart" />

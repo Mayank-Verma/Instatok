@@ -20,7 +20,7 @@ export default function ReelsComponent() {
   const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(false);
   const handleEnableAutoplay = () => {
     setIsAutoplayEnabled((prev) => !prev); // Enable autoplay with sound after button click
-    console.log("clicked on autoplay", isAutoplayEnabled);
+    // console.log("clicked on autoplay", isAutoplayEnabled);
   };
   return (
     <div className="reelsContainer">
@@ -28,20 +28,44 @@ export default function ReelsComponent() {
         <button style={{ color: "black", position: "absolute" }}>
           <div className={styles.muteUnmute} onClick={handleEnableAutoplay}>
             <MuteUnmuteButton
-              onClick={handleEnableAutoplay}
-              handleEnableAutoplay={handleEnableAutoplay}
+              isAutoplayEnabled={isAutoplayEnabled}
+              setIsAutoplayEnabled={setIsAutoplayEnabled}
             />
           </div>
         </button>
         <Reel videoURL={videos[0]} isAutoplayEnabled={isAutoplayEnabled} />
       </section>
       <section>
+        <button style={{ color: "black", position: "absolute" }}>
+          <div className={styles.muteUnmute} onClick={handleEnableAutoplay}>
+            <MuteUnmuteButton
+              isAutoplayEnabled={isAutoplayEnabled}
+              setIsAutoplayEnabled={setIsAutoplayEnabled}
+            />
+          </div>
+        </button>
         <Reel videoURL={videos[1]} isAutoplayEnabled={isAutoplayEnabled} />
       </section>
       <section>
+        <button style={{ color: "black", position: "absolute" }}>
+          <div className={styles.muteUnmute} onClick={handleEnableAutoplay}>
+            <MuteUnmuteButton
+              isAutoplayEnabled={isAutoplayEnabled}
+              setIsAutoplayEnabled={setIsAutoplayEnabled}
+            />
+          </div>
+        </button>
         <Reel videoURL={videos[2]} isAutoplayEnabled={isAutoplayEnabled} />
       </section>
       <section>
+        <button style={{ color: "black", position: "absolute" }}>
+          <div className={styles.muteUnmute} onClick={handleEnableAutoplay}>
+            <MuteUnmuteButton
+              isAutoplayEnabled={isAutoplayEnabled}
+              setIsAutoplayEnabled={setIsAutoplayEnabled}
+            />
+          </div>
+        </button>
         <Reel videoURL={videos[3]} isAutoplayEnabled={isAutoplayEnabled} />
       </section>
     </div>

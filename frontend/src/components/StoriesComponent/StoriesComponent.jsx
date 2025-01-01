@@ -1,7 +1,7 @@
 import useEmblaCarousel from "embla-carousel-react";
 import { useEffect } from "react";
 import "./StoriesComponent.css";
-import Story from "../Story/Story";
+import Story from "../Story/Story.jsx";
 
 let stories = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; // to simulate stores
 
